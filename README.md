@@ -1,6 +1,6 @@
 # ecs163_final_project
 
-
+## Haosen
 
 1. In your proposal describe what you seek to convey.
 
@@ -30,8 +30,7 @@
       
 
       
-
-      
+   ## Alex      
 
       1. What is the best sequence you can order these findings to effectively communicate them?
       2. Do you need to provide context or explain certain aspects so that the audience will be able to follow along?
