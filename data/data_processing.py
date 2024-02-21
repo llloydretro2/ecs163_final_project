@@ -1,5 +1,6 @@
 import pandas as pd
 import subprocess
+import yfinance as yf
 import os
 
 def process_EV_population():
@@ -28,20 +29,50 @@ def process_EV_charging():
 
     combined_dataset.to_csv("./processed_data/Electric_Vehicle_Charging_Data.csv")
 
+
+def process_stock_data():
+
+    # Create a separate directory for stock
+    if not os.path.exists("./processed_data/stock"):
+        os.mkdir("./processed_data/stock")
+    commands = [
+        ["cp", "./unprocessed_data/TSLA.csv", "./processed_data/stock/TSLA.csv"],
+        ["cp", "./unprocessed_data/HMC.csv", "./processed_data/stock/HMC.csv"],
+        ["cp", "./unprocessed_data/F.csv", "./processed_data/stock/F.csv"],
+        ["cp", "./unprocessed_data/NSANY.csv", "./processed_data/stock/NSANY.csv"],
+        ["cp", "./unprocessed_data/GM.csv", "./processed_data/stock/GM.csv"]
+    ]
+
+    for command in commands:
+        subprocess.run(command)
+
 def main():
+
     # Handle EV population dataset
     process_EV_population()
 
     # Copy the EV specification data directly to the processed_data directory since it is clean
-    move_commands = ["cp", "./unprocessed_data/ElectricCarData_Clean.csv", "./processed_data/ElectricCarData_Clean.csv"]
+    copy_commands = ["cp", "./unprocessed_data/ElectricCarData_Clean.csv", "./processed_data/ElectricCarData_Clean.csv"]
     # Rename the dataset for consistency
     rename_commands = ["mv", "./processed_data/ElectricCarData_Clean.csv", "./processed_data/Electric_Vehicle_Specification_Data.csv"]
-    subprocess.run(move_commands)
+    subprocess.run(copy_commands)
     subprocess.run(rename_commands)
     
     # Handle EV charging stations dataset
     process_EV_charging()
 
+    # Process Stock Market Data
+    process_stock_data()
+
+    if not os.path.exists("./processed_data/general"):
+        os.mkdir("./processed_data/general")
+        move_commands = [
+                "mv", "./processed_data/Electric_Vehicle_Specification_Data.csv", 
+                "./processed_data/Electric_Vehicle_Charging_Data.csv", 
+                "./processed_data/Electric_Vehicle_Population_Data.csv", 
+                "./processed_data/general"
+            ]
+        subprocess.run(move_commands)
 
 if __name__ == '__main__':
     main()
