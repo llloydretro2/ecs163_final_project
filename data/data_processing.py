@@ -1,6 +1,5 @@
 import pandas as pd
 import subprocess
-import yfinance as yf
 import os
 
 def process_EV_population():
