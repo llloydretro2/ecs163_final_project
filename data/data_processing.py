@@ -29,6 +29,14 @@ def process_EV_charging():
     combined_dataset.to_csv("./processed_data/Electric_Vehicle_Charging_Data.csv")
 
 
+def process_EV_specification():
+    # Load datasets
+    dataset = pd.read_csv("./unprocessed_data/ElectricCarData_Clean.csv")
+    # Process the new column
+    dataset["PriceDollar"] = (dataset["PriceEuro"].astype(int) * 1.08).astype(int)
+    # Store the new dataset
+    dataset.to_csv("./processed_data/Electric_Vehicle_Specification_Data.csv")
+
 def process_stock_data():
 
     # Create a separate directory for stock
@@ -49,14 +57,10 @@ def main():
 
     # Handle EV population dataset
     process_EV_population()
-
-    # Copy the EV specification data directly to the processed_data directory since it is clean
-    copy_commands = ["cp", "./unprocessed_data/ElectricCarData_Clean.csv", "./processed_data/ElectricCarData_Clean.csv"]
-    # Rename the dataset for consistency
-    rename_commands = ["mv", "./processed_data/ElectricCarData_Clean.csv", "./processed_data/Electric_Vehicle_Specification_Data.csv"]
-    subprocess.run(copy_commands)
-    subprocess.run(rename_commands)
     
+    # Handle EV specification dataset
+    process_EV_specification()
+
     # Handle EV charging stations dataset
     process_EV_charging()
 
@@ -65,13 +69,13 @@ def main():
 
     if not os.path.exists("./processed_data/general"):
         os.mkdir("./processed_data/general")
-        move_commands = [
-                "mv", "./processed_data/Electric_Vehicle_Specification_Data.csv", 
-                "./processed_data/Electric_Vehicle_Charging_Data.csv", 
-                "./processed_data/Electric_Vehicle_Population_Data.csv", 
-                "./processed_data/general"
-            ]
-        subprocess.run(move_commands)
+    move_commands = [
+            "mv", "./processed_data/Electric_Vehicle_Specification_Data.csv", 
+            "./processed_data/Electric_Vehicle_Charging_Data.csv", 
+            "./processed_data/Electric_Vehicle_Population_Data.csv", 
+            "./processed_data/general"
+        ]
+    subprocess.run(move_commands)
 
 if __name__ == '__main__':
     main()
