@@ -47,6 +47,7 @@ function processDataOne(rawData) {
 // Final data processing
 function processDataTwo(data) {
     let carInfo = {};
+    let countyInfo = {};
     data.forEach(d => {
         if (!carInfo[d.Make]) {
             carInfo[d.Make] = {};
@@ -55,8 +56,13 @@ function processDataTwo(data) {
             carInfo[d.Make][d.Model_Year] = 0;
         }
         carInfo[d.Make][d.Model_Year]++;
+        if (!countyInfo[d.County]) {
+            countyInfo[d.County] = 1;
+        } else {
+            countyInfo[d.County] ++;
+        }
     });
-    return carInfo;
+    return [carInfo, countyInfo];
 }
 
 d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").then(rawData => {
@@ -64,9 +70,9 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").th
     let allMakes = [],
         allCities = [];
     let carInfo = [],
-        cityInfo = [];
+        countyInfo = [];
     // Proess data
     [allMakes, allCities, rawData] = processDataOne(rawData);
-    carInfo = processDataTwo(rawData);
+    [carInfo, countyInfo] = processDataTwo(rawData);
 
 });
