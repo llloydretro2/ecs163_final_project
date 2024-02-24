@@ -48,6 +48,8 @@ function processDataOne(rawData) {
 function processDataTwo(data) {
     let carInfo = {};
     let countyInfo = {};
+    let overallCarCount = {};
+
     data.forEach(d => {
         if (!carInfo[d.Make]) {
             carInfo[d.Make] = {};
@@ -59,20 +61,54 @@ function processDataTwo(data) {
         if (!countyInfo[d.County]) {
             countyInfo[d.County] = 1;
         } else {
-            countyInfo[d.County] ++;
+            countyInfo[d.County]++;
+        }
+
+        // Increment overall car count for the brand from 2018
+        if (d.Model_Year >= 2018) {
+            if (!overallCarCount[d.Make]) {
+                overallCarCount[d.Make] = 1;
+            } else {
+                overallCarCount[d.Make]++;
+            }
         }
     });
-    return [carInfo, countyInfo];
+
+    // Function to calculate cumulative counts for each year from 2018 to 2024
+    function calculateCumulativeCounts(data) {
+        let cumulativeCounts = {};
+        let cumulativeCount = 0;
+        for (let year = 2018; year <= 2024; year++) {
+            cumulativeCount += data[year] || 0;
+            cumulativeCounts[year] = cumulativeCount;
+        }
+        return cumulativeCounts;
+    }
+    
+    // Array to store results
+    let cumulativeCarInfo = [];
+    
+    // Loop through the dataset
+    for (const [brand, data] of Object.entries(carInfo)) {
+        // Calculate cumulative counts for the brand from 2018 to 2024
+        const cumulativeCounts = calculateCumulativeCounts(data);
+        // Add the brand with its cumulative counts to the result array
+        cumulativeCarInfo.push({ [brand]: cumulativeCounts });
+    }
+
+    return [cumulativeCarInfo, countyInfo, overallCarCount];
 }
+
 
 d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").then(rawData => {
     // Initialize variables
     let allMakes = [],
         allCities = [];
     let carInfo = [],
-        countyInfo = [];
+        countyInfo = {},
+        overallCarCount = {};
     // Proess data
     [allMakes, allCities, rawData] = processDataOne(rawData);
-    [carInfo, countyInfo] = processDataTwo(rawData);
+    [carInfo, countyInfo, overallCarCount] = processDataTwo(rawData);
 
 });
