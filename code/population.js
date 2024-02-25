@@ -14,6 +14,13 @@ let pieMargin = {top: 10, right: 30, bottom: 30, left: 60},
     pieWidth = (1/2) * width - pieMargin.left - pieMargin.right,
     pieHeight = height - pieMargin.top - pieMargin.bottom;
 
+// Initialize variables
+let allMakes = [],
+    allCities = [];
+let carInfo = [],
+    countyInfo = {},
+    overallCarCount = {};
+
 // Preliminary data processing
 function processDataOne(rawData) {
     // Record all car makes
@@ -99,7 +106,7 @@ function processDataTwo(data) {
     return [cumulativeCarInfo, countyInfo, overallCarCount];
 }
 
-
+// Call to process initial data
 d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").then(rawData => {
     // Initialize variables
     let allMakes = [],
@@ -110,5 +117,13 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").th
     // Proess data
     [allMakes, allCities, rawData] = processDataOne(rawData);
     [carInfo, countyInfo, overallCarCount] = processDataTwo(rawData);
+
+});
+
+d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").then(rawData => {
+
+    const carManufacturers = rawData.columns.slice(1);
+    // Select svg4 element using D3
+    const svg = d3.select("#svg4");
 
 });
