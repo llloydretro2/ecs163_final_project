@@ -24,7 +24,7 @@ def keep_top_ten():
     total_counts_2024 = df_2024.sum(axis=0)
 
     # Sort the categories by counts and select the top ten largest categories
-    top_categories = total_counts_2024.nlargest(10)
+    top_categories = total_counts_2024.nlargest(11)
 
     # Get the column names of the top ten categories
     top_categories_columns = top_categories.index

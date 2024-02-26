@@ -12,9 +12,7 @@ d3.json('https://d3js.org/us-10m.v2.json').then(function(us) {
 
     // Continue with your map drawing logic here, using 'data'
     // For example, appending paths for each state feature to the SVG
-    const svg = d3.select("body").append("svg")
-        .attr("width", mapWidth)
-        .attr("height", mapHeight);
+    const svg = d3.select("#svg2")
 
     const projection = d3.geoAlbersUsa()
         .translate([mapWidth / 2, mapHeight / 2])
