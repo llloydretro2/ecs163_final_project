@@ -9,7 +9,7 @@ let streamMargin = {top: 10, right: 30, bottom: 30, left: 60},
     streamHeight = (1/2) * height - streamMargin.top - streamMargin.bottom;
 
 // Dimensions for Pie Chart
-let pieLeft = (1/5) * width, pieTop = (1/5) * height;
+let pieLeft = (4/7) * width, pieTop = (1/5) * height;
 let pieMargin = {top: 10, right: 30, bottom: 30, left: 60},
     pieWidth = (1/2) * width - pieMargin.left - pieMargin.right,
     pieHeight = height - pieMargin.top - pieMargin.bottom;
@@ -28,7 +28,8 @@ function processDataOne(rawData) {
     // Record all Cities
     let allCities = [];
     // Process the data and convert ordinal numbers to number type
-    rawData.forEach(d => {
+    rawData.forEach(d => {;
+        d.Make = String(d.Make)
         d.Model_Year = Number(d.Model_Year);
         d.Electric_Range = Number(d.Electric_Range);
         if (!(allMakes.includes(d.Make))) {
@@ -53,18 +54,15 @@ function processDataOne(rawData) {
 
 // Final data processing
 function processDataTwo(data) {
-    let carInfo = {};
-    let countyInfo = {};
-    let overallCarCount = {};
 
     data.forEach(d => {
-        if (!carInfo[d.Make]) {
-            carInfo[d.Make] = {};
+        if (!carInfo[String(d.Make)]) {
+            carInfo[String(d.Make)] = {};
         }
-        if (!carInfo[d.Make][d.Model_Year]) {
-            carInfo[d.Make][d.Model_Year] = 0;
+        if (!carInfo[String(d.Make)][Number(d.Model_Year)]) {
+            carInfo[String(d.Make)][Number(d.Model_Year)] = 0;
         }
-        carInfo[d.Make][d.Model_Year]++;
+        carInfo[String(d.Make)][Number(d.Model_Year)]++;
         if (!countyInfo[d.County]) {
             countyInfo[d.County] = 1;
         } else {
@@ -73,10 +71,10 @@ function processDataTwo(data) {
 
         // Increment overall car count for the brand from 2018
         if (d.Model_Year >= 2018) {
-            if (!overallCarCount[d.Make]) {
-                overallCarCount[d.Make] = 1;
+            if (!overallCarCount[String(d.Make)]) {
+                overallCarCount[String(d.Make)] = 1;
             } else {
-                overallCarCount[d.Make]++;
+                overallCarCount[String(d.Make)]++;
             }
         }
     });
@@ -103,28 +101,77 @@ function processDataTwo(data) {
         cumulativeCarInfo.push({ [brand]: cumulativeCounts });
     }
 
-    return [cumulativeCarInfo, countyInfo, overallCarCount];
+}
+
+function drawPieChart() {
+    let radius = Math.min(pieWidth, pieHeight) / 4;
+    let svg = d3.select("#svg4");
+    let g2 = svg.append("g")
+        .attr("transform", "translate(" + pieLeft + "," +  pieTop + ")");
+
+    const carManufacturers = ['VOLVO', 'TESLA', 'AUDI', 'FORD', 'BMW', 'KIA', 'HYUNDAI', 'PORSCHE', 'CHEVROLET', 'NISSAN'];
+
+    var colorRange = [
+        "#1f78b4", // VOLVO
+        "#33a02c", // TESLA
+        "#e31a1c", // AUDI
+        "#ff7f00", // FORD
+        "#6a3d9a", // BMW
+        "#b15928", // KIA
+        "#a6cee3", // HYUNDAI
+        "#fdbf6f", // PORSCHE
+        "#fb9a99", // CHEVROLET
+        "#cab2d6"  // NISSAN
+    ];
+
+    let processedData = {}
+    for (let i = 0; i < carManufacturers.length; i ++) {
+        processedData[carManufacturers[i]] = overallCarCount[carManufacturers[i]];
+    }
+
+    // Create a color scale
+    var color = d3.scaleOrdinal()
+        .domain(carManufacturers)
+        .range(colorRange);
+    const pie = d3.pie()
+        .value(function(d) {return d[1]})
+    const data_ready = pie(Object.entries(processedData))
+    var arcGenerator = d3.arc()
+        .innerRadius(0)
+        .outerRadius(radius)
+    g2
+        .selectAll('mySlices')
+        .data(data_ready)
+        .enter()
+        .append('path')
+          .attr('d', arcGenerator)
+          .attr('fill', function(d){ return(color(d.data[0])) })
+          .attr("stroke", "black")
+          .style("stroke-width", "2px")
+          .style("opacity", 0.7)
+
+    g2
+        .selectAll('mySlices')
+        .data(data_ready)
+        .join('text')
+        .text(function(d){ return d.data[0]})
+        .attr("transform", function(d) { return `translate(${d3.arc().innerRadius(0).outerRadius(radius * 1.5).centroid(d)})`})
+        .style("text-anchor", "middle")
+        .style("font-size", 16)
 }
 
 // Call to process initial data
 d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").then(rawData => {
-    // Initialize variables
-    let allMakes = [],
-        allCities = [];
-    let carInfo = [],
-        countyInfo = {},
-        overallCarCount = {};
     // Proess data
     [allMakes, allCities, rawData] = processDataOne(rawData);
-    [carInfo, countyInfo, overallCarCount] = processDataTwo(rawData);
+    processDataTwo(rawData);
 
 });
 
 d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").then(rawData => {
-// d3.csv("../data/unprocessed_data/Electric_Vehicle_Population_Count.csv").then(rawData => {  
+
     const carManufacturers = rawData.columns.slice(1);
-    // const carManufacturers = ['VOLVO', 'TESLA', 'AUDI', 'FORD', 'BMW', 'KIA', 'HYUNDAI', 'PORSCHE', 'CHEVROLET', 'NISSAN'];
-    console.log(carManufacturers)
+
     // Select svg4 element using D3
     const svg = d3.select("#svg4");
 
@@ -150,7 +197,6 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").t
         .attr("transform", "translate(" + streamMargin.left + ",0)")
         .call(d3.axisLeft(y));
 
-    // Define the range of colors you want to use
     var colorRange = [
         "#1f78b4", // VOLVO
         "#33a02c", // TESLA
@@ -191,3 +237,8 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").t
     )       
 
 });
+
+
+d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").then(rawData => {
+    drawPieChart()
+})
