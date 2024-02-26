@@ -9,7 +9,7 @@ let streamMargin = {top: 10, right: 30, bottom: 30, left: 60},
     streamHeight = (1/2) * height - streamMargin.top - streamMargin.bottom;
 
 // Dimensions for Pie Chart
-let pieLeft = (4/7) * width, pieTop = (1/5) * height;
+let pieLeft = (5/7) * width, pieTop = (2/5) * height;
 let pieMargin = {top: 10, right: 30, bottom: 30, left: 60},
     pieWidth = (1/2) * width - pieMargin.left - pieMargin.right,
     pieHeight = height - pieMargin.top - pieMargin.bottom;
