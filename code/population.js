@@ -168,8 +168,77 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").th
 
 });
 
-d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").then(rawData => {
+// d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").then(rawData => {
 
+//     const carManufacturers = rawData.columns.slice(1);
+
+//     // Select svg4 element using D3
+//     const svg = d3.select("#svg4");
+
+//     const g1 = svg.append("g")
+//                 .attr("width", (1/2) * width)
+//                 .attr("height", height)
+//                 // .attr("transform", `translate(${streamLeft}, ${streamMargin.top})`);  
+
+//     // Add X axis
+//     var x = d3.scaleLinear()
+//         .domain(d3.extent(rawData, function(d) { return d.Model_Year; }))
+//         .range([ streamMargin.left, streamWidth ]);
+//     g1.append("g")
+//         .attr("transform", "translate(0," + streamHeight + ")")
+//         .call(d3.axisBottom(x).ticks(5));
+
+//     // Add Y axis
+//     var y = d3.scaleLinear()
+//         .domain([-4000, 4000])
+//         .range([streamHeight, streamMargin.top]);
+
+//     g1.append("g")
+//         .attr("transform", "translate(" + streamMargin.left + ",0)")
+//         .call(d3.axisLeft(y));
+
+//     var colorRange = [
+//         "#1f78b4", // VOLVO
+//         "#33a02c", // TESLA
+//         "#e31a1c", // AUDI
+//         "#ff7f00", // FORD
+//         "#6a3d9a", // BMW
+//         "#b15928", // KIA
+//         "#a6cee3", // HYUNDAI
+//         "#fdbf6f", // PORSCHE
+//         "#fb9a99", // CHEVROLET
+//         "#cab2d6"  // NISSAN
+//     ];
+
+//     // Create a color scale
+//     var color = d3.scaleOrdinal()
+//         .domain(carManufacturers)
+//         .range(colorRange);
+
+//     // stack the data
+//     var stackedData = d3.stack()
+//         .keys(carManufacturers)
+//         .offset(d3.stackOffsetSilhouette)(rawData.map(d => ({
+//         Model_Year: +d.Model_Year, // Convert to number
+//         ...d // Spread the rest of the object properties
+//     })));
+
+//     // Show the areas
+//     g1
+//         .selectAll("mylayers")
+//         .data(stackedData)
+//         .enter()
+//         .append("path")
+//             .style("fill", function(d) { return color(d.key); })
+//             .attr("d", d3.area()
+//             .x(function(d, i) { return x(d.data.Model_Year); })
+//             .y0(function(d) { return y(d[0]); })
+//             .y1(function(d) { return y(d[1]); })
+//     )       
+
+// });
+
+d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").then(rawData => {
     const carManufacturers = rawData.columns.slice(1);
 
     // Select svg4 element using D3
@@ -190,7 +259,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").t
 
     // Add Y axis
     var y = d3.scaleLinear()
-        .domain([-4000, 4000])
+        .domain([0, 6000])
         .range([streamHeight, streamMargin.top]);
 
     g1.append("g")
@@ -218,10 +287,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").t
     // stack the data
     var stackedData = d3.stack()
         .keys(carManufacturers)
-        .offset(d3.stackOffsetSilhouette)(rawData.map(d => ({
-        Model_Year: +d.Model_Year, // Convert to number
-        ...d // Spread the rest of the object properties
-    })));
+        (rawData);
 
     // Show the areas
     g1
@@ -235,9 +301,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").t
             .y0(function(d) { return y(d[0]); })
             .y1(function(d) { return y(d[1]); })
     )       
-
-});
-
+})
 
 d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").then(rawData => {
     drawPieChart()
