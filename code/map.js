@@ -75,8 +75,8 @@ d3.csv('../data/processed_data/general/state_counts_sorted.csv').then(data => {
       statesArray.push(d.state)
   });
 
-  console.log(stationCountByState)
-  console.log(statesArray)
+  // console.log(stationCountByState)
+  // console.log(statesArray)
 
   let colorScale = d3.scaleSequential(d3.interpolateBlues)
       .domain(d3.extent(data, d => +d.number)); // Use the extent of station numbers for domain
@@ -95,21 +95,32 @@ d3.csv('../data/processed_data/general/state_counts_sorted.csv').then(data => {
           .on("click", function(event, d) {
             
             // let stateName = d.properties.id;
-            console.log(statesArray[d])
-            console.log(stationCountByState[statesArray[d]])
+            // console.log(statesArray[d])
+            // console.log(stationCountByState[statesArray[d]])
 
 
             map.select("text").remove();
 
               // Append new text element at the mouse position
-            map.append("text")
-                .attr("x", 50)
-                .attr("y", 100)
-                .attr("class", "info-text") // Add a class for styling if needed
-                .text('number: ' + stationCountByState[statesArray[d]])
-                .attr("fill", "black") // Set the text color
+            mapText = map.append("text")
+                .attr("x", width/10)
+                .attr("y", height/8)
+                .attr("fill", "black")
                 .style("font-size", "16px")
-                .style("pointer-events", "none");
+                .attr("font-family", "serif")
+                .style("pointer-events", "none")
+                
+            mapText.append("tspan")
+              .attr("x", width/10)
+              .attr("y", height/8)
+                .text('state: ' + statesArray[d])
+            
+            mapText.append("tspan")
+                .attr("x", width/10)
+                .attr("y", height/7)
+                .text('number: ' + stationCountByState[statesArray[d]])
+            
+            
             
         });
   });
