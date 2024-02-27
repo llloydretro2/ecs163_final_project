@@ -32,18 +32,23 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
         .padding(1)
         .domain(dimensions);
 
+    console.log("x domain", x.domain());
+
     function path(d) {
         return d3.line()(dimensions.map(function(p) { return [x(p), y[p](d[p])]; }));
     }
+        
 
-    // Draw the lines
+    // Draw paths
     g1.selectAll("myPath")
-    .data(rawData)
-    .enter().append("path")
-    .attr("d",  path)
-    .style("fill", "none")
-    .style("stroke", "")
-    .style("opacity", 0.5)
+        .data(rawData)
+        .join("path")
+        .enter().append("path")
+        .attr("class", function (d) { return "line " + d.Name } )
+        // .attr("d",  path)
+        .style("fill", "none")
+        .style("stroke", "#69b3a2")
+        .style("opacity", 1)
 
     // Draw the axis:
     g1.selectAll("myAxis")
