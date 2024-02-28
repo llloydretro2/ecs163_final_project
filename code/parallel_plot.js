@@ -16,23 +16,10 @@ function processParallelData(rawData) {
     return processedData;
 }
 
-function checkBrand(rawData, string) {
-    let diffBrands = [];
-    rawData.forEach(d => {
-        if (!(diffBrands.includes(d[string]))){
-            diffBrands.push(d[string]);
-        }
-    });
-    return diffBrands;
-}
 
 d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv").then(rawData =>{
 
     let processedData = processParallelData(rawData);
-    console.log(rawData[0]["Brand"]);
-
-    let diffBrands = checkBrand(rawData, "Brand");
-    console.log(diffBrands);
 
     const g1 = svg3.append("g")
                 .attr("width", parallelWidth + parallelMargin.left + parallelMargin.right)
@@ -94,6 +81,15 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
             .attr("y", -9)
             .text(function(d, i) { return dimNames[i]; })
             .style("fill", "black")
+
+// Add a title to g1
+g1.append("text")
+.attr("x", parallelWidth / 2)
+.attr("y", -30)
+.attr("text-anchor", "middle")
+.style("font-size", "16px")
+.style("font-weight", "bold")
+.text("Electric Vehicle Specifications");
 
 }).catch(function(error){
     console.log(error);
