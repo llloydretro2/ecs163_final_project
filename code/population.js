@@ -280,22 +280,28 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").t
                 .attr("d", d3.line()
                     .x(function(d) { return x(d.Model_Year); })
                     .y(function(d) { return y(d[key]); })
-                );
+                )
+                .style("opacity", "0");
         });
+        
+        g1.selectAll(".line")
+            .transition()
+            .duration(2000)
+            .style("opacity", 1);
     }
 
     function updateToStack() {
 
-        // Remove stacked area
+        // Remove lines
         g1.selectAll(".line")
             .transition()
             .duration(1000)
             .style("opacity", 0);
 
-        // Remove stacked area
+        // Restore stacked area
         g1.selectAll(".stacked-area")
             .transition()
-            .duration(1000)
+            .duration(2000)
             .style("opacity", 1);
         
         y.domain([0, 6000]);

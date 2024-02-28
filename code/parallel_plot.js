@@ -119,29 +119,41 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
             .text(function(d, i) { return dimNames[i]; })
             .style("fill", "black")
 
-// Add a title to g1
-g1.append("text")
-.attr("x", parallelWidth / 2)
-.attr("y", -30)
-.attr("text-anchor", "middle")
-.style("font-size", "16px")
-.style("font-weight", "bold")
-.text("Electric Vehicle Specifications");
+    // Add a title to g1
+    g1.append("text")
+        .attr("x", parallelWidth / 2)
+        .attr("y", -30)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-weight", "bold")
+        .text("Electric Vehicle Specifications");
 
-// Selection
-const lines = g1.selectAll("path");
+    // Selection
+    const lines = g1.selectAll("path");
 
-// Increases size of line that you are mousing over
-lines.on("mouseover", function(d) {
-    d3.select(this)
-        .style("stroke-width", 3)
-});
+    // Increases size of line that you are mousing over
+    lines.on("mouseover", function(d) {
+        // first every group turns grey
+        d3.selectAll(".line")
+            .transition().duration(200)
+            .style("stroke", "lightgrey")
+            .style("opacity", "0.2")
 
-// Returns them to original size after done mousing over
-lines.on("mouseout", function(d) {
-    d3.select(this)
-        .style("stroke-width", 1.5)
-});
+        // Second the hovered specie takes its color
+        d3.select(this)
+            .transition().duration(200)
+            .style("stroke", "#69b3a2")
+            .style("opacity", "1")
+    });
+
+    // Returns them to original size after done mousing over
+    lines.on("mouseout", function(d) {
+        d3.selectAll(".line")
+            .transition().duration(200).delay(1000)
+            .style("stroke", "#69b3a2")
+            .style("opacity", "1")
+
+    });
 
 }).catch(function(error){
     console.log(error);
