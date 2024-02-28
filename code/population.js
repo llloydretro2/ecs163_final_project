@@ -159,6 +159,16 @@ function drawPieChart() {
         .attr("transform", function(d) { return `translate(${d3.arc().innerRadius(0).outerRadius(radius * 1.5).centroid(d)})`})
         .style("text-anchor", "middle")
         .style("font-size", 16)
+
+    // Add a title to g2
+    g2.append("text")
+        .attr("x", 0)
+        .attr("y", -1 * radius - 20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-weight", "bold")
+        .text("The Number of Cars Composition");
+
 }
 
 // Call to process initial data
