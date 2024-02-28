@@ -169,6 +169,7 @@ d3.csv('../data/processed_data/general/state_counts_sorted.csv').then(data => {
           .attr("text-anchor", "middle")
           .attr("alignment-baseline", "middle")
           .style("font-size", "10px")
+          .style("fill", "orange")
           .text(d => d.id);
 
         geojson.features.forEach(feature => {

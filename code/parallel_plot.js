@@ -128,6 +128,13 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
         .style("font-weight", "bold")
         .text("Electric Vehicle Specifications");
 
+    // Add text element to display selected name
+    let selectedNameText = g1.append("text")
+        .attr("x", x("PriceDollar") + 50)
+        .attr("y", -10)
+        .style("font-size", "16px")
+        .style("fill", "black");
+
     // Selection
     const lines = g1.selectAll("path");
 
@@ -144,6 +151,9 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
             .transition().duration(200)
             .style("stroke", "#69b3a2")
             .style("opacity", "1")
+
+        selectedNameText.transition().duration(200).text("Selected Car: " + d.Model);    
+
     });
 
     // Returns them to original size after done mousing over
@@ -152,7 +162,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
             .transition().duration(200).delay(1000)
             .style("stroke", "#69b3a2")
             .style("opacity", "1")
-
+        selectedNameText.transition().duration(200).delay(1000).text("");
     });
 
 }).catch(function(error){
