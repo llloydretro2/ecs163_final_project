@@ -16,9 +16,23 @@ function processParallelData(rawData) {
     return processedData;
 }
 
+function checkBrand(rawData, string) {
+    let diffBrands = [];
+    rawData.forEach(d => {
+        if (!(diffBrands.includes(d[string]))){
+            diffBrands.push(d[string]);
+        }
+    });
+    return diffBrands;
+}
+
 d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv").then(rawData =>{
 
     let processedData = processParallelData(rawData);
+    console.log(rawData[0]["Brand"]);
+
+    let diffBrands = checkBrand(rawData, "Brand");
+    console.log(diffBrands);
 
     const g1 = svg3.append("g")
                 .attr("width", parallelWidth + parallelMargin.left + parallelMargin.right)
@@ -27,7 +41,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
 
     // For the parallel plot, we only care about these attributes
     let dimensions = ["AccelSec","TopSpeed_KmH", "Range_Km", "Efficiency_WhKm", "FastCharge_KmH", "Seats", "PriceDollar"];
-    let dimNames = ["Acceleration", "Top Speed (Km/Hr)", "Range (Km)", "Efficiency (Wh/km)", "Fast Charge", "Number of Seats", "Price (in Dollars)"];
+    let dimNames = ["Acceleration", "Top Speed (Km/Hr)", "Range (Km)", "Efficiency (Wh/Km)", "Fast Charge", "Number of Seats", "Price (in Dollars)"];
 
     // store y objects
     const y = {};
