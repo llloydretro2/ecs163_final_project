@@ -61,15 +61,18 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
         .style("stroke", "#69b3a2")
         .style("opacity", 1)
         .on("click", function(d) {
-            console.log("Clicked line:", d);
 
+            g1.selectAll(".car_spec").remove();
+            
             g1.append("text")
+                .attr("class", "car_spec")
                 .attr("x", 1200)
                 .attr("y", 20)
                 .text("Selected Car Data: ")
                 .attr("fill", "black");
 
             g1.append("text")
+                .attr("class", "car_spec")
                 .attr("x", 1200)
                 .attr("y", 50)
                 .text("Brand: " + d.Brand)
@@ -78,12 +81,14 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
             for (let i = 0; i < 7; i++) {
                 if (dimNames[i] === "Acceleration") {
                     g1.append("text")
+                    .attr("class", "car_spec")
                     .attr("x", 1150)
                     .attr("y", 80 + i * 30)
                     .text(dimTitles[i] + d[dimensions[i]])
                     .attr("fill", "black");
                 } else {
                     g1.append("text")
+                    .attr("class", "car_spec")
                     .attr("x", 1200)
                     .attr("y", 80 + i * 30)
                     .text(dimTitles[i] + d[dimensions[i]])
