@@ -27,7 +27,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
 
     // For the parallel plot, we only care about these attributes
     let dimensions = ["AccelSec","TopSpeed_KmH", "Range_Km", "Efficiency_WhKm", "FastCharge_KmH", "Seats", "PriceDollar"];
-    let dimNames = ["Acceleration", "Top Speed (Km per Hour)", "Range (Km)", "Efficiency (Wh/km)", "Fast Charge", "Number of Seats", "Price (in Dollars)"];
+    let dimNames = ["Acceleration", "Top Speed (Km/Hr)", "Range (Km)", "Efficiency (Wh/km)", "Fast Charge", "Number of Seats", "Price (in Dollars)"];
 
     // store y objects
     const y = {};
@@ -67,7 +67,13 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
         // I translate this element to its right position on the x axis
         .attr("transform", function(d) { return "translate(" + x(d) + ")"; })
         // And I build the axis with the call function
-        .each(function(d) { d3.select(this).call(d3.axisLeft().scale(y[d])); })
+        .each(function(d) { 
+            if (d === "Seats") {
+                d3.select(this).call(d3.axisLeft().scale(y[d]).ticks(4));
+            } else {
+                d3.select(this).call(d3.axisLeft().scale(y[d])); 
+            }
+        })
         // Add axis title
         .append("text")
             .style("text-anchor", "middle")
