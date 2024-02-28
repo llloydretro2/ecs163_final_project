@@ -155,7 +155,7 @@ function drawPieChart() {
         .selectAll('mySlices')
         .data(data_ready)
         .join('text')
-        .text(function(d){ return d.data[0]})
+        .text(function(d){ return d.data[1]})
         .attr("transform", function(d) { return `translate(${d3.arc().innerRadius(0).outerRadius(radius * 1.5).centroid(d)})`})
         .style("text-anchor", "middle")
         .style("font-size", 16)
@@ -251,9 +251,19 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").t
     var x = d3.scaleLinear()
         .domain(d3.extent(rawData, function(d) { return d.Model_Year; }))
         .range([ streamMargin.left, streamWidth ]);
+
     g1.append("g")
         .attr("transform", "translate(0," + streamHeight + ")")
-        .call(d3.axisBottom(x).ticks(5));
+        .call(d3.axisBottom(x).ticks(5))
+        // Add axis title
+        .append("text")
+          .style("text-anchor", "middle")
+          .attr("transform", `translate(${streamWidth + 40}, ${0})`)
+          .attr("y", 10)
+          .style("font-size", "12px")
+          .text("Year")
+          .style("fill", "black");
+      
 
     // Add Y axis
     var y = d3.scaleLinear()
@@ -262,7 +272,15 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").t
 
     g1.append("g")
         .attr("transform", "translate(" + streamMargin.left + ",0)")
-        .call(d3.axisLeft(y));
+        .call(d3.axisLeft(y))
+        // Add axis title
+        .append("text")
+            .style("text-anchor", "middle")
+            .attr("transform", `translate(${0}, ${0})`)
+            .attr("y", -9)
+            .style("font-size", "12px")
+            .text("Number of Cars")
+            .style("fill", "black");
 
     // stack the data
     var stackedData = d3.stack()
