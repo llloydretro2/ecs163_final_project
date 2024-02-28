@@ -3,7 +3,7 @@ const width = window.innerWidth;
 const height = window.innerHeight;
 
 // Dimensions for Stream Graph
-let streamLeft = (1/5) * width, streamTop = (1/5) * height;
+let streamLeft = (1/15) * width, streamTop = (1/5) * height;
 let streamMargin = {top: 10, right: 30, bottom: 30, left: 60},
     streamWidth = (1/2) * width - streamMargin.left - streamMargin.right,
     streamHeight = (1/2) * height - streamMargin.top - streamMargin.bottom;
@@ -20,6 +20,26 @@ let allMakes = [],
 let carInfo = [],
     countyInfo = {},
     overallCarCount = {};
+
+const carManufacturers = ['VOLVO', 'TESLA', 'AUDI', 'FORD', 'BMW', 'KIA', 'HYUNDAI', 'PORSCHE', 'CHEVROLET', 'NISSAN'];
+
+var colorRange = [
+    "#1f78b4", // VOLVO
+    "#33a02c", // TESLA
+    "#e31a1c", // AUDI
+    "#ff7f00", // FORD
+    "#6a3d9a", // BMW
+    "#b15928", // KIA
+    "#a6cee3", // HYUNDAI
+    "#fdbf6f", // PORSCHE
+    "#fb9a99", // CHEVROLET
+    "#cab2d6"  // NISSAN
+];
+
+// Create a color scale
+var color = d3.scaleOrdinal()
+    .domain(carManufacturers)
+    .range(colorRange);
 
 // Preliminary data processing
 function processDataOne(rawData) {
@@ -109,30 +129,11 @@ function drawPieChart() {
     let g2 = svg.append("g")
         .attr("transform", "translate(" + pieLeft + "," +  pieTop + ")");
 
-    const carManufacturers = ['VOLVO', 'TESLA', 'AUDI', 'FORD', 'BMW', 'KIA', 'HYUNDAI', 'PORSCHE', 'CHEVROLET', 'NISSAN'];
-
-    var colorRange = [
-        "#1f78b4", // VOLVO
-        "#33a02c", // TESLA
-        "#e31a1c", // AUDI
-        "#ff7f00", // FORD
-        "#6a3d9a", // BMW
-        "#b15928", // KIA
-        "#a6cee3", // HYUNDAI
-        "#fdbf6f", // PORSCHE
-        "#fb9a99", // CHEVROLET
-        "#cab2d6"  // NISSAN
-    ];
-
     let processedData = {}
     for (let i = 0; i < carManufacturers.length; i ++) {
         processedData[carManufacturers[i]] = overallCarCount[carManufacturers[i]];
     }
 
-    // Create a color scale
-    var color = d3.scaleOrdinal()
-        .domain(carManufacturers)
-        .range(colorRange);
     const pie = d3.pie()
         .value(function(d) {return d[1]})
     const data_ready = pie(Object.entries(processedData))
@@ -169,8 +170,6 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").th
 });
 
 // d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").then(rawData => {
-
-//     const carManufacturers = rawData.columns.slice(1);
 
 //     // Select svg4 element using D3
 //     const svg = d3.select("#svg4");
@@ -239,7 +238,6 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").th
 // });
 
 d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").then(rawData => {
-    const carManufacturers = rawData.columns.slice(1);
 
     // Select svg4 element using D3
     const svg = d3.select("#svg4");
@@ -247,7 +245,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").t
     const g1 = svg.append("g")
                 .attr("width", (1/2) * width)
                 .attr("height", height)
-                // .attr("transform", `translate(${streamLeft}, ${streamMargin.top})`);  
+                .attr("transform", `translate(${streamLeft}, ${streamTop})`);  
 
     // Add X axis
     var x = d3.scaleLinear()
@@ -265,24 +263,6 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").t
     g1.append("g")
         .attr("transform", "translate(" + streamMargin.left + ",0)")
         .call(d3.axisLeft(y));
-
-    var colorRange = [
-        "#1f78b4", // VOLVO
-        "#33a02c", // TESLA
-        "#e31a1c", // AUDI
-        "#ff7f00", // FORD
-        "#6a3d9a", // BMW
-        "#b15928", // KIA
-        "#a6cee3", // HYUNDAI
-        "#fdbf6f", // PORSCHE
-        "#fb9a99", // CHEVROLET
-        "#cab2d6"  // NISSAN
-    ];
-
-    // Create a color scale
-    var color = d3.scaleOrdinal()
-        .domain(carManufacturers)
-        .range(colorRange);
 
     // stack the data
     var stackedData = d3.stack()
@@ -304,5 +284,37 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").t
 })
 
 d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").then(rawData => {
-    drawPieChart()
+
+    drawPieChart();
+
+    const svg = d3.select("#svg4");
+    // Add a legend to the side of the parallel coordinates plot
+    const legend = svg.append("g")
+        .attr("class", "legend")
+        .attr("transform", `translate(${width - 200}, ${streamTop})`);
+
+    const legendRectSize = 26;
+    const legendSpacing = 4;
+
+    // Create legend items
+    const legendItems = legend.selectAll(".legend-item")
+        .data(carManufacturers)
+        .enter()
+        .append("g")
+        .attr("class", "legend-item")
+        .attr("transform", function (d, i) { return `translate(0, ${i * (legendRectSize + legendSpacing)})`; });
+
+    // Append rectangles to the legend items
+    legendItems.append("rect")
+        .attr("width", legendRectSize)
+        .attr("height", legendRectSize)
+        .style("fill", function (d) { return color(d); });
+
+    // Append text to the legend items
+    legendItems.append("text")
+        .attr("x", legendRectSize + legendSpacing)
+        .attr("y", legendRectSize - legendSpacing)
+        .text(function (d) { return d; })
+        .style("font-size", 16);
+    
 })
