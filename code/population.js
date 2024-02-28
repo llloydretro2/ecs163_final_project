@@ -167,9 +167,11 @@ function drawPieChart() {
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .style("font-weight", "bold")
-        .text("The Number of Cars Composition");
+        .text("The Number of Cars Composition in Washington State");
 
 }
+
+
 
 // Call to process initial data
 d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").then(rawData => {
@@ -178,74 +180,6 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").th
     processDataTwo(rawData);
 
 });
-
-// d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").then(rawData => {
-
-//     // Select svg4 element using D3
-//     const svg = d3.select("#svg4");
-
-//     const g1 = svg.append("g")
-//                 .attr("width", (1/2) * width)
-//                 .attr("height", height)
-//                 // .attr("transform", `translate(${streamLeft}, ${streamMargin.top})`);  
-
-//     // Add X axis
-//     var x = d3.scaleLinear()
-//         .domain(d3.extent(rawData, function(d) { return d.Model_Year; }))
-//         .range([ streamMargin.left, streamWidth ]);
-//     g1.append("g")
-//         .attr("transform", "translate(0," + streamHeight + ")")
-//         .call(d3.axisBottom(x).ticks(5));
-
-//     // Add Y axis
-//     var y = d3.scaleLinear()
-//         .domain([-4000, 4000])
-//         .range([streamHeight, streamMargin.top]);
-
-//     g1.append("g")
-//         .attr("transform", "translate(" + streamMargin.left + ",0)")
-//         .call(d3.axisLeft(y));
-
-//     var colorRange = [
-//         "#1f78b4", // VOLVO
-//         "#33a02c", // TESLA
-//         "#e31a1c", // AUDI
-//         "#ff7f00", // FORD
-//         "#6a3d9a", // BMW
-//         "#b15928", // KIA
-//         "#a6cee3", // HYUNDAI
-//         "#fdbf6f", // PORSCHE
-//         "#fb9a99", // CHEVROLET
-//         "#cab2d6"  // NISSAN
-//     ];
-
-//     // Create a color scale
-//     var color = d3.scaleOrdinal()
-//         .domain(carManufacturers)
-//         .range(colorRange);
-
-//     // stack the data
-//     var stackedData = d3.stack()
-//         .keys(carManufacturers)
-//         .offset(d3.stackOffsetSilhouette)(rawData.map(d => ({
-//         Model_Year: +d.Model_Year, // Convert to number
-//         ...d // Spread the rest of the object properties
-//     })));
-
-//     // Show the areas
-//     g1
-//         .selectAll("mylayers")
-//         .data(stackedData)
-//         .enter()
-//         .append("path")
-//             .style("fill", function(d) { return color(d.key); })
-//             .attr("d", d3.area()
-//             .x(function(d, i) { return x(d.data.Model_Year); })
-//             .y0(function(d) { return y(d[0]); })
-//             .y1(function(d) { return y(d[1]); })
-//     )       
-
-// });
 
 d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").then(rawData => {
 
@@ -281,6 +215,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").t
         .range([streamHeight, streamMargin.top]);
 
     g1.append("g")
+        .attr("id", "y-axis")
         .attr("transform", "translate(" + streamMargin.left + ",0)")
         .call(d3.axisLeft(y))
         // Add axis title
@@ -303,12 +238,108 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").t
         .data(stackedData)
         .enter()
         .append("path")
+            .attr("class", function (d) { return "stacked-area" } )
             .style("fill", function(d) { return color(d.key); })
             .attr("d", d3.area()
             .x(function(d, i) { return x(d.data.Model_Year); })
             .y0(function(d) { return y(d[0]); })
             .y1(function(d) { return y(d[1]); })
-    )       
+    )   
+
+    function updateToLine(data) {
+
+        // Parse the data
+        data.forEach(function(d) {
+            d.Model_Year = parseInt(d.Model_Year);
+            carManufacturers.forEach(function(key) {
+                d[key] = +d[key];
+            });
+        });
+    
+        // Remove stacked area
+        g1.selectAll(".stacked-area")
+            .transition()
+            .duration(1000)
+            .style("opacity", 0);
+        
+        y.domain([0, 1100]);
+
+        // Update the y-axis
+        g1.select("#y-axis")
+            .transition()
+            .call(d3.axisLeft(y));
+
+        // Add the line for each car manufacturer
+        carManufacturers.forEach(function(key) {
+            g1.append("path")
+                .datum(data)
+                .attr("class", "line")
+                .attr("fill", "none")
+                .attr("stroke", color(key))
+                .attr("stroke-width", 1.5)
+                .attr("d", d3.line()
+                    .x(function(d) { return x(d.Model_Year); })
+                    .y(function(d) { return y(d[key]); })
+                );
+        });
+    }
+
+    function updateToStack() {
+
+        // Remove stacked area
+        g1.selectAll(".line")
+            .transition()
+            .duration(1000)
+            .style("opacity", 0);
+
+        // Remove stacked area
+        g1.selectAll(".stacked-area")
+            .transition()
+            .duration(1000)
+            .style("opacity", 1);
+        
+        y.domain([0, 6000]);
+
+        // Update the y-axis
+        g1.select("#y-axis")
+            .transition()
+            .call(d3.axisLeft(y));
+
+    }
+
+    const options = ["Stack", "Line"];
+    const option_button = g1.append("foreignObject")
+        .attr("width", 100)
+        .attr("height", 40)
+        .attr("x", streamWidth + 10)
+        .attr("y", 40)
+        .append("xhtml:select")
+        .attr("id", "mySelect")
+
+    option_button.selectAll("option")
+        .data(options)
+        .enter().append("option")
+        .text(function (d) { return d; })
+        .attr("value", function (d) { return d; })
+
+    d3.select("#mySelect").on("change", function(d) {
+        var selected = d3.select(this).node().value;
+
+        if(selected === "Line") {
+            updateToLine(rawData);
+        } else {
+            updateToStack();
+        }
+    })       
+
+    // Add a title to g1
+    g1.append("text")
+        .attr("x", streamWidth / 2)
+        .attr("y", -20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-weight", "bold")
+        .text("The Number of Cars in Washington State");
 })
 
 d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").then(rawData => {
