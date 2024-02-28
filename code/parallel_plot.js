@@ -24,11 +24,12 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
     const g1 = svg3.append("g")
                 .attr("width", parallelWidth + parallelMargin.left + parallelMargin.right)
                 .attr("height", parallelHeight + parallelMargin.top + parallelMargin.bottom)
-                .attr("transform", `translate(${parallelMargin.left}, ${height - (parallelHeight + parallelMargin.top + parallelMargin.bottom)})`);
+                .attr("transform", `translate(${-100}, ${height - (parallelHeight + parallelMargin.top + parallelMargin.bottom)})`);
 
     // For the parallel plot, we only care about these attributes
     let dimensions = ["AccelSec","TopSpeed_KmH", "Range_Km", "Efficiency_WhKm", "FastCharge_KmH", "Seats", "PriceDollar"];
     let dimNames = ["Acceleration", "Top Speed (Km/Hr)", "Range (Km)", "Efficiency (Wh/Km)", "Fast Charge", "Number of Seats", "Price (in Dollars)"];
+    let dimTitles = ["Acceleration (0 to 100Km/Hr time): ", "Top Speed (Km/Hr): ", "Range (Km): ", "Efficiency (Wh/Km): ", "Fast Charge: ", "Number of Seats: ", "Price (in Dollars): "]
 
     // store y objects
     const y = {};
@@ -59,6 +60,37 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
         .style("fill", "none")
         .style("stroke", "#69b3a2")
         .style("opacity", 1)
+        .on("click", function(d) {
+            console.log("Clicked line:", d);
+
+            g1.append("text")
+                .attr("x", 1200)
+                .attr("y", 20)
+                .text("Selected Car Data: ")
+                .attr("fill", "black");
+
+            g1.append("text")
+                .attr("x", 1200)
+                .attr("y", 50)
+                .text("Brand: " + d.Brand)
+                .attr("fill", "black");
+
+            for (let i = 0; i < 7; i++) {
+                if (dimNames[i] === "Acceleration") {
+                    g1.append("text")
+                    .attr("x", 1150)
+                    .attr("y", 80 + i * 30)
+                    .text(dimTitles[i] + d[dimensions[i]])
+                    .attr("fill", "black");
+                } else {
+                    g1.append("text")
+                    .attr("x", 1200)
+                    .attr("y", 80 + i * 30)
+                    .text(dimTitles[i] + d[dimensions[i]])
+                    .attr("fill", "black");
+                }
+            }
+        });
 
     // Draw the axis:
     g1.selectAll("myAxis")
@@ -90,6 +122,21 @@ g1.append("text")
 .style("font-size", "16px")
 .style("font-weight", "bold")
 .text("Electric Vehicle Specifications");
+
+// Selection
+const lines = g1.selectAll("path");
+
+// Increases size of line that you are mousing over
+lines.on("mouseover", function(d) {
+    d3.select(this)
+        .style("stroke-width", 3)
+});
+
+// Returns them to original size after done mousing over
+lines.on("mouseout", function(d) {
+    d3.select(this)
+        .style("stroke-width", 1.5)
+});
 
 }).catch(function(error){
     console.log(error);
