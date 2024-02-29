@@ -296,7 +296,8 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").t
         g1.selectAll(".line")
             .transition()
             .duration(1000)
-            .style("opacity", 0);
+            .style("opacity", 0)
+            .remove();
 
         // Restore stacked area
         g1.selectAll(".stacked-area")
