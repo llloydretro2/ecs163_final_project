@@ -97,28 +97,6 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
             }
         });
 
-    // Draw the axis:
-    g1.selectAll("myAxis")
-        // For each dimension of the dataset I add a 'g' element:
-        .data(dimensions).enter()
-        .append("g")
-        // I translate this element to its right position on the x axis
-        .attr("transform", function(d) { return "translate(" + x(d) + ")"; })
-        // And I build the axis with the call function
-        .each(function(d) { 
-            if (d === "Seats") {
-                d3.select(this).call(d3.axisLeft().scale(y[d]).ticks(4));
-            } else {
-                d3.select(this).call(d3.axisLeft().scale(y[d])); 
-            }
-        })
-        // Add axis title
-        .append("text")
-            .style("text-anchor", "middle")
-            .attr("y", -9)
-            .text(function(d, i) { return dimNames[i]; })
-            .style("fill", "black")
-
     // Add a title to g1
     g1.append("text")
         .attr("x", parallelWidth / 2)
@@ -164,6 +142,28 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
             .style("opacity", "1")
         selectedNameText.transition().duration(200).delay(1000).text("");
     });
+
+    // Draw the axis:
+    g1.selectAll("myAxis")
+        // For each dimension of the dataset I add a 'g' element:
+        .data(dimensions).enter()
+        .append("g")
+        // I translate this element to its right position on the x axis
+        .attr("transform", function(d) { return "translate(" + x(d) + ")"; })
+        // And I build the axis with the call function
+        .each(function(d) { 
+            if (d === "Seats") {
+                d3.select(this).call(d3.axisLeft().scale(y[d]).ticks(4));
+            } else {
+                d3.select(this).call(d3.axisLeft().scale(y[d])); 
+            }
+        })
+        // Add axis title
+        .append("text")
+            .style("text-anchor", "middle")
+            .attr("y", -9)
+            .text(function(d, i) { return dimNames[i]; })
+            .style("fill", "black")
 
 }).catch(function(error){
     console.log(error);
