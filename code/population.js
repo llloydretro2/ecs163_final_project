@@ -3,13 +3,13 @@ const width = window.innerWidth;
 const height = window.innerHeight;
 
 // Dimensions for Stream Graph
-let streamLeft = (1/15) * width, streamTop = (1/5) * height;
+let streamLeft = (3/7) * width, streamTop = (1/10) * height;
 let streamMargin = {top: 10, right: 30, bottom: 30, left: 60},
     streamWidth = (1/2) * width - streamMargin.left - streamMargin.right,
-    streamHeight = (1/2) * height - streamMargin.top - streamMargin.bottom;
+    streamHeight = (2/5) * height - streamMargin.top - streamMargin.bottom;
 
 // Dimensions for Pie Chart
-let pieLeft = (5/7) * width, pieTop = (2/5) * height;
+let pieLeft = (5/7) * width, pieTop = (3/4) * height;
 let pieMargin = {top: 10, right: 30, bottom: 30, left: 60},
     pieWidth = (1/2) * width - pieMargin.left - pieMargin.right,
     pieHeight = height - pieMargin.top - pieMargin.bottom;
@@ -20,6 +20,8 @@ let allMakes = [],
 let carInfo = [],
     countyInfo = {},
     overallCarCount = {};
+
+let pieRadius = 0;
 
 const carManufacturers = ['VOLVO', 'TESLA', 'AUDI', 'FORD', 'BMW', 'KIA', 'HYUNDAI', 'PORSCHE', 'CHEVROLET', 'NISSAN'];
 
@@ -125,6 +127,7 @@ function processDataTwo(data) {
 
 function drawPieChart() {
     let radius = Math.min(pieWidth, pieHeight) / 4;
+    pieRadius = radius;
     let svg = d3.select("#svg4");
     let g2 = svg.append("g")
         .attr("transform", "translate(" + pieLeft + "," +  pieTop + ")");
@@ -357,7 +360,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").th
     // Add a legend to the side of the parallel coordinates plot
     const legend = svg.append("g")
         .attr("class", "legend")
-        .attr("transform", `translate(${width - 200}, ${streamTop})`);
+        .attr("transform", `translate(${width - 200}, ${pieTop - pieRadius})`);
 
     const legendRectSize = 26;
     const legendSpacing = 4;

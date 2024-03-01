@@ -1,7 +1,7 @@
 // Dimensions for Parallel Plot
-let parallelLeft = (1/5) * width, parallelTop = (1/5) * height;
+let parallelLeft = (2/5) * width, parallelTop = (1/5) * height;
 let parallelMargin = {top: 10, right: 30, bottom: 30, left: 60},
-    parallelWidth = (1) * width - parallelMargin.left - parallelMargin.right,
+    parallelWidth = (2/3) * width - parallelMargin.left - parallelMargin.right,
     parallelHeight = (1/2) * height - parallelMargin.top - parallelMargin.bottom;
 
 let svg3 = d3.select("#svg3");
@@ -24,7 +24,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
     const g1 = svg3.append("g")
                 .attr("width", parallelWidth + parallelMargin.left + parallelMargin.right)
                 .attr("height", parallelHeight + parallelMargin.top + parallelMargin.bottom)
-                .attr("transform", `translate(${-100}, ${height - (parallelHeight + parallelMargin.top + parallelMargin.bottom)})`);
+                .attr("transform", `translate(${parallelLeft}, ${height - (parallelHeight + parallelMargin.top + parallelMargin.bottom)})`);
 
     // For the parallel plot, we only care about these attributes
     let dimensions = ["AccelSec","TopSpeed_KmH", "Range_Km", "Efficiency_WhKm", "FastCharge_KmH", "Seats", "PriceDollar"];
