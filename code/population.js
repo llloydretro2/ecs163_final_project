@@ -174,8 +174,6 @@ function drawPieChart() {
 
 }
 
-
-
 // Call to process initial data
 d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").then(rawData => {
     // Proess data
