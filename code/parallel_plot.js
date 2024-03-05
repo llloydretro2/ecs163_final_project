@@ -1,7 +1,7 @@
 // Dimensions for Parallel Plot
-let parallelLeft = (2/5) * width, parallelTop = (1/5) * height;
-let parallelMargin = {top: 10, right: 30, bottom: 30, left: 60},
-    parallelWidth = (2/3) * width - parallelMargin.left - parallelMargin.right,
+let parallelLeft = (1/12) * width, parallelTop = (1/5) * height;
+let parallelMargin = {top: 10, right: 30, bottom: 50, left: 30},
+    parallelWidth = (11/12) * width - parallelMargin.left - parallelMargin.right,
     parallelHeight = (1/2) * height - parallelMargin.top - parallelMargin.bottom;
 
 let svg3 = d3.select("#svg3");
@@ -59,43 +59,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
         .attr("d",  path)
         .style("fill", "none")
         .style("stroke", "#69b3a2")
-        .style("opacity", 1)
-        .on("click", function(d) {
-
-            g1.selectAll(".car_spec").remove();
-            
-            g1.append("text")
-                .attr("class", "car_spec")
-                .attr("x", 1200)
-                .attr("y", 20)
-                .text("Selected Car Data: ")
-                .attr("fill", "black");
-
-            g1.append("text")
-                .attr("class", "car_spec")
-                .attr("x", 1200)
-                .attr("y", 50)
-                .text("Brand: " + d.Brand)
-                .attr("fill", "black");
-
-            for (let i = 0; i < 7; i++) {
-                if (dimNames[i] === "Acceleration") {
-                    g1.append("text")
-                    .attr("class", "car_spec")
-                    .attr("x", 1150)
-                    .attr("y", 80 + i * 30)
-                    .text(dimTitles[i] + d[dimensions[i]])
-                    .attr("fill", "black");
-                } else {
-                    g1.append("text")
-                    .attr("class", "car_spec")
-                    .attr("x", 1200)
-                    .attr("y", 80 + i * 30)
-                    .text(dimTitles[i] + d[dimensions[i]])
-                    .attr("fill", "black");
-                }
-            }
-        });
+        .style("opacity", 1);
 
     // Add a title to g1
     g1.append("text")
@@ -108,8 +72,9 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
 
     // Add text element to display selected name
     let selectedNameText = g1.append("text")
-        .attr("x", x("PriceDollar") + 50)
-        .attr("y", -10)
+        .attr("x", parallelWidth / 2)
+        .attr("y", parallelHeight + parallelMargin.bottom - 20)
+        .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .style("fill", "black");
 
@@ -129,8 +94,9 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
             .transition().duration(200)
             .style("stroke", "#69b3a2")
             .style("opacity", "1")
-
-        selectedNameText.transition().duration(200).text("Selected Car: " + d.Model);    
+        
+        
+        selectedNameText.transition().duration(200).text("Selected Car: " + d.Brand + " " + d.Model);    
 
     });
 
