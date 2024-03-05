@@ -1,12 +1,16 @@
-// Declare the chart dimensions and margins.
+const marginTop =  20;
+const marginRight = 50;
+const marginBottom = 50;
+const marginLeft = 50;
 
-const marginTop = 10;
-const marginRight = 600;
-const marginBottom = 450;
-const marginLeft = 30;
+const x_start = 1/2 * width;
+const x_end = width - marginRight;
 
-const x = d3.scaleUtc().range([marginLeft, width - marginRight]);
-const y = d3.scaleLinear().range([height - marginBottom, marginTop]);
+const y_start = 2/5 * height;
+const y_end = marginTop;
+
+const x = d3.scaleUtc().range([x_start, x_end]);
+const y = d3.scaleLinear().range([y_start, y_end]);
 
 const x_axis = d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0);
 const y_axis = d3.axisLeft(y).ticks(height / 40);
@@ -30,20 +34,20 @@ const line = d3.line()
 
 // Add the x-axis.
    svg3.append("g")
-   .attr("transform", `translate(0,${height - marginBottom})`)
+   .attr("transform", `translate(0,${y_start})`)
    .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0));
 
 // Add the y-axis, remove the domain line, add grid lines and a label.
     svg3.append("g")
-   .attr("transform", `translate(${marginLeft},0)`)
+   .attr("transform", `translate(${x_start},0)`)
    .call(d3.axisLeft(y).ticks(height / 40))
    .call(g => g.select(".domain").remove())
    .call(g => g.selectAll(".tick line").clone()
-       .attr("x2", width - marginLeft - marginRight)
+       .attr("x2", x_start)
        .attr("stroke-opacity", 0.1))
         .call(g => g.append("text")
        .attr("x", -marginLeft)
-       .attr("y", 10)
+       .attr("y", 15)
        .attr("fill", "currentColor")
        .attr("text-anchor", "start")
        .text("↑ Daily close ($)"));
