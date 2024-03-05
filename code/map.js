@@ -13,11 +13,8 @@ map = d3.select("#svg2")
 // A projection tells D3 how to orient the GeoJSON features
 let usaProjection = d3.geoAlbersUsa()
   .scale(1000)
-  .translate([width/3, height/2])
-let europeProjection = d3.geoMercator()
-  .center([ 13, 52 ])
-  .scale([ width / 1.5 ])
-  .translate([ width / 2, height / 2 ])
+  .translate([width/3*2, height/2])
+
 
 // The path generator uses the projection to convert the GeoJSON
 // geometry to a set of coordinates that D3 can understand
@@ -37,7 +34,7 @@ if (usa) {
 }
 
 map.append("text")
-    .attr("x", width / 3) // Center horizontally
+    .attr("x", width / 3*2) // Center horizontally
     .attr("y", height/7) // Position from the top
     .attr("text-anchor", "middle") // Center the text at (x, y)
     .style("font-size", "24px") // Example font size, adjust as needed
@@ -64,7 +61,7 @@ d3.csv('../data/processed_data/general/state_counts_sorted.csv').then(data => {
   // Create a legend container
   let legend = map.append("g")
     .attr("class", "color-legend")
-    .attr("transform", `translate(${width /5}, ${height/8*7})`);
+    .attr("transform", `translate(${width /3*2}, ${height/8*7})`);
 
   // Create a gradient for the legend
   const gradient = legend.append("defs")
