@@ -1,4 +1,4 @@
-const marginTop =  20;
+const marginTop =  50;
 const marginRight = 50;
 const marginBottom = 50;
 const marginLeft = 50;
@@ -47,10 +47,19 @@ const line = d3.line()
        .attr("stroke-opacity", 0.1))
         .call(g => g.append("text")
        .attr("x", -marginLeft)
-       .attr("y", 15)
+       .attr("y", y_end - 5)
        .attr("fill", "currentColor")
        .attr("text-anchor", "start")
        .text("↑ Daily close ($)"));
+
+// Adding title to line graph
+    svg3.append("text")
+        .attr("x", (x_start + x_end) / 2)
+        .attr("y", y_end - 10)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-weight", "bold")
+        .text("Electric Vehicle Stock Data");
 
 // Append a path for the line.
 svg3.append("path")
@@ -161,4 +170,30 @@ svg3.append("path")
 
 }).catch(function(error){
     console.log(error);
+});
+
+// Enter items for legend
+const line_colors = ["steelBlue", "black", "green", "yellow", "red"];
+const line_names = ["TSLA", "F", "NSANY", "HMC", "GM"];
+
+// Create legend with chosen items 
+const legend = svg3.append("g")
+    .attr("class", "legend")
+    .attr("transform", `translate(${x_start - 120}, ${y_start - 150})`);
+
+line_names.forEach((n, i) => {
+    const legend_item = legend.append("g")
+        .attr("transform", `translate(0, ${i * 20})`);
+    
+    legend_item.append("rect")
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("fill", line_colors[i]);
+
+    legend_item.append("text")
+        .attr("x", 15)
+        .attr("y", 6)
+        .attr("dy", "0.35em")
+        .text(n);
+
 });
