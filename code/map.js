@@ -12,7 +12,7 @@ map = d3.select("#svg2")
 
 // A projection tells D3 how to orient the GeoJSON features
 let usaProjection = d3.geoAlbersUsa()
-  .scale(1000)
+  .scale(1100)
   .translate([width/3*2, height/2])
 
 
@@ -135,12 +135,12 @@ d3.csv('../data/processed_data/general/state_counts_sorted.csv').then(data => {
             mapText.append("tspan")
               .attr("x", width/2)
               .attr("y", height/8*7)
-                .text('state: ' + statesArray[d])
+                .text('State: ' + statesArray[d])
             
             mapText.append("tspan")
                 .attr("x", width/2)
                 .attr("y", height/8*7 + 20)
-                .text('number: ' + stationCountByState[statesArray[d]])
+                .text('Number: ' + stationCountByState[statesArray[d]])
         });
         
         map.selectAll(".state-name")
@@ -192,6 +192,7 @@ d3.csv('../data/processed_data/general/state_counts_sorted.csv').then(data => {
               .attr("class", "map-title")
               .attr("text-anchor", "start")
               .style("font-size", "8px")
+              .style("fill", "orange")
               .text(feature.id);
           }
         });
