@@ -27,14 +27,14 @@ const carManufacturers = ['VOLVO', 'TESLA', 'AUDI', 'FORD', 'BMW', 'KIA', 'HYUND
 
 var colorRange = [
     "#1f78b4", // VOLVO
-    "#33a02c", // TESLA
-    "#e31a1c", // AUDI
-    "#ff7f00", // FORD
-    "#6a3d9a", // BMW
-    "#b15928", // KIA
-    "#a6cee3", // HYUNDAI
-    "#fdbf6f", // PORSCHE
-    "#fb9a99", // CHEVROLET
+    "#cc0000", // TESLA
+    "#000000", // AUDI
+    "#133A7C", // FORD
+    "#009ADA", // BMW
+    "#7E8083", // KIA
+    "#BFBAAF", // HYUNDAI
+    "#C29049", // PORSCHE
+    "#F2D638", // CHEVROLET
     "#cab2d6"  // NISSAN
 ];
 
