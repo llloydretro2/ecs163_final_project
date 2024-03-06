@@ -14,6 +14,9 @@ let pieMargin = {top: 10, right: 30, bottom: 30, left: 60},
     pieWidth = (1/2) * width - pieMargin.left - pieMargin.right,
     pieHeight = height - pieMargin.top - pieMargin.bottom;
 
+// Location for Title Page
+let titleLeft = (2/9) * width, titleTop = (1/3) * height, space = 50;
+
 // Initialize variables
 let allMakes = [],
     allCities = [];
@@ -170,7 +173,7 @@ function drawPieChart() {
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .style("font-weight", "bold")
-        .text("The Number of Cars Composition in Washington State");
+        .text("The Number of EVs Composition in Washington State");
 
 }
 
@@ -347,7 +350,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").t
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .style("font-weight", "bold")
-        .text("The Number of Cars in Washington State");
+        .text("The Number of EVs in Washington State");
 })
 
 d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").then(rawData => {
@@ -383,5 +386,29 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").th
         .attr("y", legendRectSize - legendSpacing)
         .text(function (d) { return d; })
         .style("font-size", 16);
-    
+
+    // Create Title Page
+    svg.append("text")
+        .attr("x", titleLeft)
+        .attr("y", titleTop)
+        .attr("text-anchor", "middle")
+        .style("font-size", "36px")
+        .style("font-weight", "bold")
+        .text("EV Populations in Washington State");
+
+    svg.append("text")
+        .attr("x", titleLeft)
+        .attr("y", titleTop + space) 
+        .attr("text-anchor", "middle")
+        .style("font-size", "24px")
+        .text("The entire EV population soared in 2021.");
+
+    // Add another line of text
+    svg.append("text")
+        .attr("x", titleLeft)
+        .attr("y", titleTop + space * 2)
+        .attr("text-anchor", "middle")
+        .style("font-size", "24px")
+        .text("Volvo surpassed Tesla in 2022.");        
+
 })
