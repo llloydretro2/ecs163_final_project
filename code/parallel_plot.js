@@ -1,7 +1,7 @@
 // Dimensions for Parallel Plot
-let parallelLeft = (1/12) * width, parallelTop = (1/5) * height;
+let parallelLeft = (5/12) * width, parallelTop = (1/5) * height;
 let parallelMargin = {top: 10, right: 30, bottom: 50, left: 30},
-    parallelWidth = (11/12) * width - parallelMargin.left - parallelMargin.right,
+    parallelWidth = (2/3) * width - parallelMargin.left - parallelMargin.right,
     parallelHeight = (1/2) * height - parallelMargin.top - parallelMargin.bottom;
 
 let svg3 = d3.select("#svg3");

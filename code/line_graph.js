@@ -35,7 +35,14 @@ d3.csv("../data/processed_data/stock/TSLA.csv").then(tsla_data =>{
     // Add the x-axis.
    svg3.append("g")
    .attr("transform", `translate(0,${y_start})`)
-   .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0));
+   .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0))
+    // Add axis title
+    .append("text")
+        .style("text-anchor", "middle")
+        .attr("transform", `translate(${x_end}, ${0})`)
+        .attr("y", 20)
+        .text("Year")
+        .style("fill", "black");
 
     // Add the y-axis, remove the domain line, add grid lines and a label.
     svg3.append("g")

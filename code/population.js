@@ -15,7 +15,7 @@ let pieMargin = {top: 10, right: 30, bottom: 30, left: 60},
     pieHeight = height - pieMargin.top - pieMargin.bottom;
 
 // Location for Title Page
-let titleLeft = (2/9) * width, titleTop = (1/3) * height, space = 50;
+let titlePopLeft = (2/9) * width, titlePopTop = (1/3) * height, space = 50;
 
 // Initialize variables
 let allMakes = [],
@@ -389,24 +389,24 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").th
 
     // Create Title Page
     svg.append("text")
-        .attr("x", titleLeft)
-        .attr("y", titleTop)
+        .attr("x", titlePopLeft)
+        .attr("y", titlePopTop)
         .attr("text-anchor", "middle")
         .style("font-size", "36px")
         .style("font-weight", "bold")
         .text("EV Populations in Washington State");
 
     svg.append("text")
-        .attr("x", titleLeft)
-        .attr("y", titleTop + space) 
+        .attr("x", titlePopLeft)
+        .attr("y", titlePopTop + space) 
         .attr("text-anchor", "middle")
         .style("font-size", "24px")
         .text("The entire EV population soared in 2021.");
 
     // Add another line of text
     svg.append("text")
-        .attr("x", titleLeft)
-        .attr("y", titleTop + space * 2)
+        .attr("x", titlePopLeft)
+        .attr("y", titlePopTop + space * 2)
         .attr("text-anchor", "middle")
         .style("font-size", "24px")
         .text("Volvo surpassed Tesla in 2022.");        
