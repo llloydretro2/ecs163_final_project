@@ -12,13 +12,18 @@ titleContainer = svg.append("g")
     .attr("height", titleHeight + titleMargin.top + titleMargin.bottom)
     .attr("transform", `translate(${titleMargin.left}, ${titleMargin.top})`)
 
-titleContainer.append("text")
+titleText = titleContainer.append("text")
     .attr("x", titleWidth/2)
-    .attr("y", titleHeight/7)
+    .attr("y", titleHeight/10)
     .attr("font-size", "50px")
     .attr("text-anchor", "middle")
     .text("TITLE HOLDER XXX")
     .attr("font-family", "serif")
+    .style("opacity", 0)
+
+titleText.transition()
+    .duration(1000) // Animation duration of 1 second
+    .style("opacity", 1);
 
 
 // intro paragraph
@@ -30,48 +35,48 @@ introParagraph = svg.append("g")
 
 textContainer = introParagraph.append("text")
     .attr("x", titleWidth/50)
-    .attr("y", titleHeight/4)
+    .attr("y", titleHeight/7)
     .attr("font-size", "20px")
     .attr("font-family", "serif")
     .style("opacity", 0)
 
 textContainer.append("tspan")
-    .attr("x", titleWidth/50)
-    .attr("y", titleHeight/4)
+    .attr("x", titleWidth/4)
+    .attr("y", titleHeight/5)
     .text("Nowadays, driven by growing environmental concerns and consumers’ shifting preference,")
 
 textContainer.append("tspan")
-    .attr("x", titleWidth/50)
+    .attr("x", titleWidth/4)
     .attr("dy", "1.5em")
     .text("electric vehicles (EV) have become more and more popular in recent years resulting ")
 
 textContainer.append("tspan")
-    .attr("x", titleWidth/50)
+    .attr("x", titleWidth/4)
     .attr("dy", "1.5em")
     .text("in an increase in potential buyers. As a developing market with many companies ")
 
 textContainer.append("tspan")
-    .attr("x", titleWidth/50)
+    .attr("x", titleWidth/4)
     .attr("dy", "1.5em")
     .text("with growing technology, there are many choices for new buyers. However, at the same time ")
 
 textContainer.append("tspan")
-    .attr("x", titleWidth/50)
+    .attr("x", titleWidth/4)
     .attr("dy", "1.5em")
     .text("the great complexity of the market can confuse potential buyers which makes it ")
 
 textContainer.append("tspan")
-    .attr("x", titleWidth/50)
+    .attr("x", titleWidth/4)
     .attr("dy", "1.5em")
     .text("increasingly hard to make decisions. Therefore, our goal is to analyze the data regarding ")
 
 textContainer.append("tspan")
-    .attr("x", titleWidth/50)
+    .attr("x", titleWidth/4)
     .attr("dy", "1.5em")
     .text("EVs and provide informative visualizations to guide users to understand the market ")
 
 textContainer.append("tspan")
-    .attr("x", titleWidth/50)
+    .attr("x", titleWidth/4)
     .attr("dy", "1.5em")
     .text("so that they can make informed decisions based on their needs.")
 
@@ -79,6 +84,72 @@ textContainer.transition()
     .duration(2000) // Animation duration of 1 second
     .style("opacity", 1);
 
+
+reason1 = svg.append("g")
+    .attr("width", titleWidth + titleMargin.left + titleMargin.right)
+    .attr("height", titleHeight + titleMargin.top + titleMargin.bottom)
+    .attr("transform", `translate(${titleMargin.left}, ${titleMargin.top})`)
+
+reason2 = svg.append("g")
+    .attr("width", titleWidth + titleMargin.left + titleMargin.right)
+    .attr("height", titleHeight + titleMargin.top + titleMargin.bottom)
+    .attr("transform", `translate(${titleMargin.left}, ${titleMargin.top})`)
+
+reason3 = svg.append("g")
+    .attr("width", titleWidth + titleMargin.left + titleMargin.right)
+    .attr("height", titleHeight + titleMargin.top + titleMargin.bottom)
+    .attr("transform", `translate(${titleMargin.left}, ${titleMargin.top})`)
+
+
+// first reason
+reason1Container = reason1.append("text")
+    .attr("x", width/10*2)
+    .attr("y", titleHeight/1.75)
+    .attr("font-size", "20px")
+    .attr("font-family", "serif")
+    .style("text-anchor", "middle")
+    .style("opacity", 0)
+
+reason1Container.append("tspan")
+    .text("Reason 1")
+
+reason1Container.transition()
+    .duration(3000) // Animation duration of 1 second
+    .style("opacity", 1);
+
+
+// second reason
+reason2Container = reason2.append("text")
+    .attr("x", width/10*4.5)
+    .attr("y", titleHeight/1.75)
+    .attr("font-size", "20px")
+    .attr("font-family", "serif")
+    .style("text-anchor", "middle")
+    .style("opacity", 0)
+
+reason2Container.append("tspan")
+    .text("Reason 2")
+
+reason2Container.transition()
+    .duration(3000) // Animation duration of 1 second
+    .style("opacity", 1);
+
+
+// third reason
+reason3Container = reason3.append("text")
+    .attr("x", width/10*7)
+    .attr("y", titleHeight/1.75)
+    .attr("font-size", "20px")
+    .attr("font-family", "serif")
+    .style("text-anchor", "middle")
+    .style("opacity", 0)
+
+reason3Container.append("tspan")
+    .text("Reason 3")
+
+reason3Container.transition()
+    .duration(3000) // Animation duration of 1 second
+    .style("opacity", 1);
 
 
 background = svg.append("defs");
@@ -95,12 +166,82 @@ background.append("pattern")
         .attr("y", 0);
 
 
-graph = svg.insert("rect", ":first-child") // Ensure the background is behind all other elements
+// graph 1
+graph1Container = svg.append("defs");
+graph1Container.append("pattern")
+.attr("id", "graph1")
+    .attr("patternUnits", "userSpaceOnUse")
+    .attr("width", width)
+    .attr("height", height)
+    .append("image")
+        .attr("xlink:href", "../img/introGraph1.png")
+        .attr("width", width/4)
+        .attr("height", height/3)
+        .attr("x", 0)
+        .attr("y", 0);
+
+graph1Rect = svg.insert("rect")
+    .attr("width", width/4)
+    .attr("height", height/3)
+    .attr("fill", "url(#graph1)")
+    .attr("transform", `translate(${width/9}, ${height/1.7})`)
+    .style("opacity", 0)
+
+graph1Rect.transition()
+    .duration(4000) // Animation duration of 1 second
+    .style("opacity", 1);
+
+
+// graph 2 hyperlink
+hyperLinkContainer = svg.append("a")
+    .attr("xlink:href", "https://www.irs.gov/credits-deductions/credits-for-new-clean-vehicles-purchased-in-2023-or-after")
+    .append("text")
+        .text("hyper link name")
+        .attr("font-family", "serif")
+        .style("text-anchor", "middle")
+        .attr("x", width/2.05)
+        .attr("y", height/1.5)
+        .attr("height", 100)
+        .attr("width", 200)
+        .style("opacity", 0)
+
+hyperLinkContainer.transition()
+    .duration(4000) // Animation duration of 1 second
+    .style("opacity", 1);
+
+
+// graph 3
+graph3Container = svg.append("defs");
+graph3Container.append("pattern")
+.attr("id", "graph3")
+    .attr("patternUnits", "userSpaceOnUse")
+    .attr("width", width)
+    .attr("height", height)
+    .append("image")
+        .attr("xlink:href", "../img/introGraph3.png")
+        .attr("width", width/3)
+        .attr("height", height/3)
+        .attr("x", 0)
+        .attr("y", 0);
+
+graph3Rect = svg.insert("rect")
+    .attr("width", width/4)
+    .attr("height", height/3)
+    .attr("fill", "url(#graph3)")
+    .attr("transform", `translate(${width/10*6}, ${height/1.7})`)
+    .style("opacity", 0)
+
+graph3Rect.transition()
+    .duration(4000) // Animation duration of 1 second
+    .style("opacity", 1);
+
+
+backgroundGraph = svg.insert("rect", ":first-child")
     .attr("width", width)
     .attr("height", height)
     .attr("fill", "url(#background-gif)")
     .style("opacity", 0)
 
-graph.transition()
+backgroundGraph.transition()
     .duration(2000) // Animation duration of 1 second
     .style("opacity", 0.2);
