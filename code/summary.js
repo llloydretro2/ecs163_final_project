@@ -9,7 +9,7 @@ let summaryTitleMargin = {top: 10, right: 30, bottom: 30, left: 60},
 let summaryTitle = svg5.append("g")
     .attr("width", summaryTitleWidth + summaryTitleMargin.left + summaryTitleMargin.right)
     .attr("height", summaryTitleHeight + summaryTitleMargin.top + summaryTitleMargin.bottom)
-    .attr("transform", `translate(${summaryTitleMargin.right}, ${summaryTitleMargin.top})`)
+    .attr("transform", `translate(${summaryTitleMargin.right}, ${summaryTitleMargin.top})`);
 
 summaryTitle.append("text")
     .attr("x", summaryTitleWidth/2)
@@ -17,55 +17,54 @@ summaryTitle.append("text")
     .attr("font-size", "50px")
     .attr("text-anchor", "middle")
     .text("Visualization Summary")
-    .attr("font-family", "serif")
+    .attr("font-family", "serif");
 
 
-// Define the data for the rectangles
+// Define the data for the images
+const imageFiles = ["chargingStationSymbol.jpg", "evSpecifications.jpg", "evPopulation.jpg"];
 const rectData = [
-    { x: width / 4, y: height / 2 },
+    { x: width / 5, y: height / 2 },
     { x: width / 2, y: height / 2 },
-    { x: (3 / 4) * width, y: height / 2 }
-  ];
+    { x: (4 / 5) * width, y: height / 2 }
+];
   
-// Create a group for the rectangles
-const rectsGroup = svg5.append("g");
+// Create a group for the images
+const imagesGroup = svg5.append("g");
 
-const boxName = ["Charging Station", "Specifications", "Population"];  
 const pages = [2,3,4];
+const boxName = ["Charging Station", "Specifications", "Population"];  
 
-// Draw the rectangles with text labels
-const rectangles = rectsGroup
-    .selectAll("rect")
+// Draw the images with text labels
+const images = imagesGroup
+    .selectAll("image")
     .data(rectData)
     .enter()
     .append("g")
-    .attr("class", "rectangle-group")
-    .attr("transform", d => `translate(${d.x - 50}, ${d.y - 50})`);
+    .attr("class", "image-group")
+    .attr("transform", (d, i) => `translate(${d.x - (1/5) * width / 2}, ${d.y - 50})`);
 
-rectangles
-    .append("rect")
-    .attr("width", 150)
-    .attr("height", 100)
-    .attr("fill", "steelblue")
+images
+    .append("svg:image")
+    .attr('xlink:href', (d, i) => `../img/${imageFiles[i]}`)
+    .attr("width", (1/5) * width)
+    .attr("height", (1/3) * height)
     .attr("cursor", "pointer");
 
-rectangles
+images
     .append("text")
     .attr("x", 60)
-    .attr("y", -10)
-    .attr("dy", "0.35em")
-    .attr("text-anchor", "middle")
+    .attr("y", -20)
     .style("font-size", "20px")
     .attr("fill", "black")
     .text((d, i) => boxName[i]);
 
-// Add click event listener to the rectangles
-rectangles.on("click", handleClick);
+// Add click event listener to the images
+images.on("click", handleClick);
 
 // Function to handle click event
 function handleClick(d, i) {
     const pageNumber = i + 2;
-    console.log("Click " + pageNumber)
+
     const sectionID = `page${pageNumber}`;
 
     const section = document.getElementById(sectionID);
@@ -74,14 +73,3 @@ function handleClick(d, i) {
         section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 }
-
-
-// Draw the line
-svg5
-    .append("line")
-    .attr("x1", rectData[0].x)
-    .attr("y1", rectData[0].y)
-    .attr("x2", rectData[2].x)
-    .attr("y2", rectData[2].y)
-    .attr("stroke", "black")
-    .attr("stroke-width", 2);

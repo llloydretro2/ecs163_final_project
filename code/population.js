@@ -197,7 +197,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Count.csv").t
 
     // Add X axis
     var x = d3.scaleLinear()
-        .domain(d3.extent(rawData, function(d) { return d.Model_Year; }))
+        .domain(d3.extent(rawData, function(d) { return Number(d.Model_Year); }))
         .range([ streamMargin.left, streamWidth ]);
 
     g1.append("g")
@@ -401,7 +401,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").th
         .attr("y", titlePopTop + space) 
         .attr("text-anchor", "middle")
         .style("font-size", "24px")
-        .text("The entire EV population soared in 2021.");
+        .text("The entire EV population soared in 2021 in the state of Washington.");
 
     // Add another line of text
     svg.append("text")
@@ -409,6 +409,14 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").th
         .attr("y", titlePopTop + space * 2)
         .attr("text-anchor", "middle")
         .style("font-size", "24px")
-        .text("Volvo surpassed Tesla in 2022.");        
+        .text("Volvo surpassed Tesla in 2022 in terms of EV number.");
+
+    // Add another line of text
+    svg.append("text")
+        .attr("x", titlePopLeft)
+        .attr("y", titlePopTop + space * 3)
+        .attr("text-anchor", "middle")
+        .style("font-size", "24px")
+        .text("Audi and Tesla reached a similar number of EVs in the year 2024.");       
 
 })
