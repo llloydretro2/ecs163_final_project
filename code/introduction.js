@@ -17,7 +17,7 @@ titleText = titleContainer.append("text")
     .attr("y", titleHeight/10)
     .attr("font-size", "50px")
     .attr("text-anchor", "middle")
-    .text("TITLE HOLDER XXX")
+    .text("Electrical Vehicle Data Visualization")
     .attr("font-family", "serif")
     .style("opacity", 0)
 
@@ -58,27 +58,17 @@ textContainer.append("tspan")
 textContainer.append("tspan")
     .attr("x", titleWidth/4)
     .attr("dy", "1.5em")
-    .text("with growing technology, there are many choices for new buyers. However, at the same time ")
+    .text("with growing technology, there are many choices for new buyers.  ")
 
 textContainer.append("tspan")
     .attr("x", titleWidth/4)
     .attr("dy", "1.5em")
-    .text("the great complexity of the market can confuse potential buyers which makes it ")
+    .attr("font-size", "40px")
+    .text("WHY ")
 
 textContainer.append("tspan")
-    .attr("x", titleWidth/4)
-    .attr("dy", "1.5em")
-    .text("increasingly hard to make decisions. Therefore, our goal is to analyze the data regarding ")
-
-textContainer.append("tspan")
-    .attr("x", titleWidth/4)
-    .attr("dy", "1.5em")
-    .text("EVs and provide informative visualizations to guide users to understand the market ")
-
-textContainer.append("tspan")
-    .attr("x", titleWidth/4)
-    .attr("dy", "1.5em")
-    .text("so that they can make informed decisions based on their needs.")
+    .attr("x", titleWidth/4+100)
+    .text("people choose EV?")
 
 textContainer.transition()
     .duration(2000) // Animation duration of 1 second
@@ -104,14 +94,14 @@ reason3 = svg.append("g")
 // first reason
 reason1Container = reason1.append("text")
     .attr("x", width/10*2)
-    .attr("y", titleHeight/1.75)
+    .attr("y", height/2)
     .attr("font-size", "20px")
     .attr("font-family", "serif")
     .style("text-anchor", "middle")
     .style("opacity", 0)
 
 reason1Container.append("tspan")
-    .text("Reason 1")
+    .text("Environmental Friendly")
 
 reason1Container.transition()
     .duration(3000) // Animation duration of 1 second
@@ -121,14 +111,16 @@ reason1Container.transition()
 // second reason
 reason2Container = reason2.append("text")
     .attr("x", width/10*4.5)
-    .attr("y", titleHeight/1.75)
+    .attr("y", height/2)
     .attr("font-size", "20px")
     .attr("font-family", "serif")
     .style("text-anchor", "middle")
     .style("opacity", 0)
 
 reason2Container.append("tspan")
-    .text("Reason 2")
+    .text("Federal Incentives from Government")
+
+
 
 reason2Container.transition()
     .duration(3000) // Animation duration of 1 second
@@ -138,14 +130,18 @@ reason2Container.transition()
 // third reason
 reason3Container = reason3.append("text")
     .attr("x", width/10*7)
-    .attr("y", titleHeight/1.75)
+    .attr("y", height/2)
     .attr("font-size", "20px")
     .attr("font-family", "serif")
     .style("text-anchor", "middle")
     .style("opacity", 0)
 
 reason3Container.append("tspan")
-    .text("Reason 3")
+    .text("State Goals for EV")
+reason3Container.append("tspan")
+    .attr("x", width/10*7)
+    .attr("dy", "1.5em")
+    .text("(both Democratic	and Republican)")
 
 reason3Container.transition()
     .duration(3000) // Animation duration of 1 second
@@ -154,12 +150,12 @@ reason3Container.transition()
 
 background = svg.append("defs");
 background.append("pattern")
-.attr("id", "background-gif")
+.attr("id", "background")
     .attr("patternUnits", "userSpaceOnUse")
     .attr("width", width)
     .attr("height", height)
     .append("image")
-        .attr("xlink:href", "../img/test.gif")
+        .attr("xlink:href", "../img/introBackground.webp")
         .attr("width", width)
         .attr("height", height)
         .attr("x", 0)
@@ -196,9 +192,11 @@ graph1Rect.transition()
 hyperLinkContainer = svg.append("a")
     .attr("xlink:href", "https://www.irs.gov/credits-deductions/credits-for-new-clean-vehicles-purchased-in-2023-or-after")
     .append("text")
-        .text("hyper link name")
+        .text("IRS tax Incentives")
         .attr("font-family", "serif")
         .style("text-anchor", "middle")
+        .style("text-decoration","underline")
+        .attr("font-size", "20px")
         .attr("x", width/2.05)
         .attr("y", height/1.5)
         .attr("height", 100)
@@ -235,13 +233,52 @@ graph3Rect.transition()
     .duration(4000) // Animation duration of 1 second
     .style("opacity", 1);
 
+// hyper link for 3
+// graph 2 hyperlink
+hyperLinkContainer2 = svg.append("a")
+    .attr("xlink:href", "https://ww2.arb.ca.gov/news/california-moves-accelerate-100-new-zero-emission-vehicle-sales-2035")
+    .append("text")
+        .text("California Goal")
+        .attr("font-family", "serif")
+        .style("text-anchor", "middle")
+        .style("text-decoration","underline")
+        .attr("font-size", "20px")
+        .attr("x", width/1.075)
+        .attr("y", height/1.5)
+        .attr("height", 100)
+        .attr("width", 200)
+        .style("opacity", 0)
 
+hyperLinkContainer2.transition()
+    .duration(4000) // Animation duration of 1 second
+    .style("opacity", 1);
+
+hyperLinkContainer3 = svg.append("a")
+    .attr("xlink:href", "https://afdc.energy.gov/laws/all?state=AL#State%20Incentives")
+    .append("text")
+        .text("Alabama Goal")
+        .attr("font-family", "serif")
+        .style("text-anchor", "middle")
+        .style("text-decoration","underline")
+        .attr("font-size", "20px")
+        .attr("x", width/1.075)
+        .attr("y", height/1.25)
+        .attr("height", 100)
+        .attr("width", 200)
+        .style("opacity", 0)
+
+hyperLinkContainer3.transition()
+    .duration(4000) // Animation duration of 1 second
+    .style("opacity", 1);
+
+
+// background
 backgroundGraph = svg.insert("rect", ":first-child")
     .attr("width", width)
     .attr("height", height)
-    .attr("fill", "url(#background-gif)")
+    .attr("fill", "url(#background)")
     .style("opacity", 0)
 
 backgroundGraph.transition()
     .duration(2000) // Animation duration of 1 second
-    .style("opacity", 0.2);
+    .style("opacity", 0.1);

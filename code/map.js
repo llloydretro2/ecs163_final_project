@@ -7,8 +7,8 @@ let mapMargin = {top: 10, right: 30, bottom: 30, left: 60},
 
 // Setting up the svg element for D3 to draw in
 map = d3.select("#svg2")
-    .attr("width", width)
-    .attr("height", height)
+  .attr("width", width)
+  .attr("height", height)
 
 // A projection tells D3 how to orient the GeoJSON features
 let usaProjection = d3.geoAlbersUsa()
@@ -33,14 +33,41 @@ if (usa) {
   geoJsonUrl = "https://gist.githubusercontent.com/spiker830/3eab0cb407031bf9f2286f98b9d0558a/raw/7edae936285e77be675366550e20f9166bed0ed5/europe_features.json"
 }
 
-map.append("text")
-    .attr("x", width / 3*2) // Center horizontally
-    .attr("y", height/7) // Position from the top
-    .attr("text-anchor", "middle") // Center the text at (x, y)
-    .style("font-size", "24px") // Example font size, adjust as needed
+graphTitle = map.append("text")
+    .attr("x", width / 3*2)
+    .attr("y", height/7)
+    .attr("text-anchor", "middle")
+    .style("font-size", "24px")
     .attr("class", "map-title")
     .attr("font-family", "serif")
-    .text("Interactive Map of Charging Station Counts in the USA"); // Your title
+    .text("Interactive Map of Charging Station Counts in the USA");
+
+description = map.append("text")
+  .attr("x", width/5)
+  .attr("y", height/3)
+  .attr("font-size", "36px")
+  .attr("class", "map-title")
+  .attr("text-anchor", "middle")
+  .text("Number of EV Charging Station in All States")
+  .attr("font-family", "serif")
+
+description.append("tspan")
+  .attr("x", width/5)
+  .attr("dy", "2em")
+  .attr("font-size", "24px")
+  .text("The number of charging stations of USA in 2024 Feb")
+
+description.append("tspan")
+  .attr("x", width/5)
+  .attr("dy", "2em")
+  .attr("font-size", "24px")
+  .text("California has the most charging stations, 18501")
+
+description.append("tspan")
+  .attr("x", width/5)
+  .attr("dy", "2em")
+  .attr("font-size", "24px")
+  .text("Montana has the least charging stations, 70")
 
 
 d3.csv('../data/processed_data/general/state_counts_sorted.csv').then(data => {
