@@ -255,38 +255,40 @@ line_names.forEach((n, i) => {
         .text(n);
 
 // Create Title Page
-svg3.append("text")
-    .attr("x", titleLinLeft)
-    .attr("y", titleLinTop)
-    .attr("text-anchor", "middle")
-    .attr("font-family", "serif")
-    .style("font-size", "36px")
-    .text("EV Specifications and the Stock Market");
 
-svg3.append("text")
-    .attr("x", titleLinLeft)
-    .attr("y", titleLinTop + space) 
-    .attr("text-anchor", "middle")
-    .attr("font-family", "serif")
-    .style("font-size", "24px")
-    .text("The top of the line EV specifications are from Tesla.");
-
-// Add another line of text
-svg3.append("text")
-    .attr("x", titleLinLeft)
-    .attr("y", titleLinTop + space * 2)
-    .attr("text-anchor", "middle")
-    .attr("font-family", "serif")
-    .style("font-size", "24px")
-    .text("Furthermore, the stock price reflects this, Tesla ");
-
-// Add another line of text
-svg3.append("text")
-    .attr("x", titleLinLeft)
-    .attr("y", titleLinTop + space * 3)
-    .attr("text-anchor", "middle")
-    .attr("font-family", "serif")
-    .style("font-size", "24px")
-    .text("outclassing every other EV manufacturer by a wide margin.");
 
 });
+
+
+
+description = svg3.append("text")
+  .attr("x", width/5)
+  .attr("y", height/3)
+  .attr("font-size", "36px")
+  .attr("class", "map-title")
+  .attr("text-anchor", "middle")
+  .attr("font-family", "serif")
+  .style("font-weight", "bold")
+  .text("EV Specifications and the Stock Market");
+
+
+description.append("tspan")
+  .attr("x", width/5)
+  .attr("dy", "2em")
+  .attr("font-size", "24px")
+  .style("font-weight", "normal")
+  .text("The top of the line EV specifications are from Tesla.");
+
+description.append("tspan")
+  .attr("x", width/5)
+  .attr("dy", "2em")
+  .attr("font-size", "24px")
+  .style("font-weight", "normal")
+  .text("Furthermore, the stock price reflects this, Tesla ");
+
+description.append("tspan")
+  .attr("x", width/5)
+  .attr("dy", "2em")
+  .attr("font-size", "24px")
+  .style("font-weight", "normal")
+  .text("outclassing every other EV manufacturer by a wide margin.");
