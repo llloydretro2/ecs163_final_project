@@ -48,26 +48,26 @@ description = map.append("text")
   .attr("font-size", "36px")
   .attr("class", "map-title")
   .attr("text-anchor", "middle")
-  .text("Number of EV Charging Station in All States")
+  .text("Number of EV Charging Station in All States.")
   .attr("font-family", "serif")
 
 description.append("tspan")
   .attr("x", width/5)
   .attr("dy", "2em")
   .attr("font-size", "24px")
-  .text("The number of charging stations of USA in 2024 Feb")
+  .text("The number of charging stations of USA in 2024 Feb.")
 
 description.append("tspan")
   .attr("x", width/5)
   .attr("dy", "2em")
   .attr("font-size", "24px")
-  .text("California has the most charging stations, 18501")
+  .text("California has the most charging stations, 18501.")
 
 description.append("tspan")
   .attr("x", width/5)
   .attr("dy", "2em")
   .attr("font-size", "24px")
-  .text("Montana has the least charging stations, 70")
+  .text("Alaska has the least charging stations, 70.")
 
 
 d3.csv('../data/processed_data/general/state_counts_sorted.csv').then(data => {

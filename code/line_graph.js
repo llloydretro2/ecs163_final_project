@@ -93,7 +93,7 @@ d3.csv("../data/processed_data/stock/TSLA.csv").then(tsla_data =>{
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .style("font-weight", "bold")
-        .text("Electric Vehicle Stock Data");
+        .text("Electric Vehicle Manufacturers Stock Data");
 
     // Append a path for the line.
     svg3.append("path")
