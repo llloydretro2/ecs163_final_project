@@ -15,6 +15,31 @@ const y = d3.scaleLinear().range([y_start, y_end]);
 const x_axis = d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0);
 const y_axis = d3.axisLeft(y).ticks(height / 40);
 
+function highlight(brand, color) {
+    svg3.selectAll(".line")
+        .transition().duration(200)
+        .style("stroke", function() {
+            if (d3.select(this).attr("class") === (brand)) {
+                return color;
+            } else {
+                return "lightgrey"; 
+            }
+        })
+        .style("opacity", function() {
+            if (d3.select(this).attr("class") === (brand)) {
+                return "1"; 
+            } else {
+                return "0.2";
+            }
+        });
+}
+
+function reset_highlight() {
+    d3.selectAll(".line")
+            .transition().duration(200).delay(1000)
+            .style("stroke", "#69b3a2")
+            .style("opacity", "1")
+}
 
 d3.csv("../data/processed_data/stock/TSLA.csv").then(tsla_data =>{
     
@@ -71,9 +96,15 @@ d3.csv("../data/processed_data/stock/TSLA.csv").then(tsla_data =>{
     // Append a path for the line.
     svg3.append("path")
         .attr("fill", "none")
-        .attr("stroke", "steelblue")
+        .attr("stroke", "#cc0000")
         .attr("stroke-width", 1.5)
-        .attr("d", line(tsla_data));
+        .attr("d", line(tsla_data))
+        .on("mouseover", function() {
+            highlight("line Tesla ", "#cc0000");
+        })
+        .on("mouseout", function() {
+            reset_highlight();
+        });
 
 }).catch(function(error){
     console.log(error);
@@ -96,9 +127,15 @@ d3.csv("../data/processed_data/stock/F.csv").then(F_data =>{
     // Append a path for the line.
     svg3.append("path")
         .attr("fill", "none")
-        .attr("stroke", "black")
+        .attr("stroke", "#133A7C")
         .attr("stroke-width", 1.5)
-        .attr("d", line(F_data));
+        .attr("d", line(F_data))
+        .on("mouseover", function() {
+            highlight("line Ford ", "#133A7C");
+        })
+        .on("mouseout", function() {
+            reset_highlight();
+        });
 
 }).catch(function(error){
     console.log(error);
@@ -121,9 +158,15 @@ d3.csv("../data/processed_data/stock/NSANY.csv").then(NSANY_data =>{
     // Append a path for the line.
     svg3.append("path")
         .attr("fill", "none")
-        .attr("stroke", "green")
+        .attr("stroke", "#cab2d6")
         .attr("stroke-width", 1.5)
-        .attr("d", line(NSANY_data));
+        .attr("d", line(NSANY_data))
+        .on("mouseover", function() {
+            highlight("line Nissan ", "#cab2d6");
+        })
+        .on("mouseout", function() {
+            reset_highlight();
+        });
 
 }).catch(function(error){
     console.log(error);
@@ -146,9 +189,15 @@ d3.csv("../data/processed_data/stock/HMC.csv").then(HMC_data =>{
     // Append a path for the line.
     svg3.append("path")
         .attr("fill", "none")
-        .attr("stroke", "yellow")
+        .attr("stroke", "#fc0384")
         .attr("stroke-width", 1.5)
-        .attr("d", line(HMC_data));
+        .attr("d", line(HMC_data))
+        .on("mouseover", function() {
+            highlight("line Honda ", "#fc0384");
+        })
+        .on("mouseout", function() {
+            reset_highlight();
+        });
 
 }).catch(function(error){
     console.log(error);
@@ -171,7 +220,7 @@ d3.csv("../data/processed_data/stock/GM.csv").then(GM_data =>{
     // Append a path for the line.
     svg3.append("path")
         .attr("fill", "none")
-        .attr("stroke", "red")
+        .attr("stroke", "#3283a8")
         .attr("stroke-width", 1.5)
         .attr("d", line(GM_data));
 
@@ -180,7 +229,7 @@ d3.csv("../data/processed_data/stock/GM.csv").then(GM_data =>{
     });
 
     // Enter items for legend
-    const line_colors = ["steelBlue", "black", "green", "yellow", "red"];
+    const line_colors = ["#cc0000", "#133A7C", "#cab2d6", "#fc0384", "#3283a8"];
     const line_names = ["Tesla", "Ford", "Nissan", "Honda", "General Motors"];
 
     // Create legend with chosen items 
