@@ -9,6 +9,8 @@ const x_end = width - marginRight;
 const y_start = 2/5 * height;
 const y_end = marginTop;
 
+let titleLinLeft = (2/10) * width, titleLinTop = (1/6) * height;
+
 const x = d3.scaleUtc().range([x_start, x_end]);
 const y = d3.scaleLinear().range([y_start, y_end]);
 
@@ -228,28 +230,60 @@ d3.csv("../data/processed_data/stock/GM.csv").then(GM_data =>{
         console.log(error);
     });
 
-    // Enter items for legend
-    const line_colors = ["#cc0000", "#133A7C", "#cab2d6", "#fc0384", "#3283a8"];
-    const line_names = ["Tesla", "Ford", "Nissan", "Honda", "General Motors"];
+// Enter items for legend
+const line_colors = ["#cc0000", "#133A7C", "#cab2d6", "#fc0384", "#3283a8"];
+const line_names = ["Tesla", "Ford", "Nissan", "Honda", "General Motors"];
 
-    // Create legend with chosen items 
-    const legend = svg3.append("g")
-        .attr("class", "legend")
-        .attr("transform", `translate(${x_start - 150}, ${y_start - 150})`);
+// Create legend with chosen items 
+const legend = svg3.append("g")
+    .attr("class", "legend")
+    .attr("transform", `translate(${x_start - 150}, ${y_start - 100})`);
 
-    line_names.forEach((n, i) => {
-        const legend_item = legend.append("g")
-            .attr("transform", `translate(0, ${i * 20})`);
+line_names.forEach((n, i) => {
+    const legend_item = legend.append("g")
+        .attr("transform", `translate(0, ${i * 20})`);
         
-        legend_item.append("rect")
-            .attr("width", 10)
-            .attr("height", 10)
-            .attr("fill", line_colors[i]);
+    legend_item.append("rect")
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("fill", line_colors[i]);
 
-        legend_item.append("text")
-            .attr("x", 15)
-            .attr("y", 6)
-            .attr("dy", "0.35em")
-            .text(n);
+    legend_item.append("text")
+        .attr("x", 15)
+        .attr("y", 6)
+        .attr("dy", "0.35em")
+        .text(n);
+
+// Create Title Page
+svg3.append("text")
+    .attr("x", titleLinLeft)
+    .attr("y", titleLinTop)
+    .attr("text-anchor", "middle")
+    .style("font-size", "24px")
+    .style("font-weight", "bold")
+    .text("EV Specifications and the Stock Market");
+
+svg3.append("text")
+    .attr("x", titleLinLeft)
+    .attr("y", titleLinTop + space) 
+    .attr("text-anchor", "middle")
+    .style("font-size", "18px")
+    .text("The top of the line EV specifications are from Tesla.");
+
+// Add another line of text
+svg3.append("text")
+    .attr("x", titleLinLeft)
+    .attr("y", titleLinTop + space * 2)
+    .attr("text-anchor", "middle")
+    .style("font-size", "18px")
+    .text("Furthermore, the stock price reflects this, Tesla ");
+
+// Add another line of text
+svg3.append("text")
+    .attr("x", titleLinLeft)
+    .attr("y", titleLinTop + space * 3)
+    .attr("text-anchor", "middle")
+    .style("font-size", "18px")
+    .text("outclassing every other EV manufacturer by a wide margin.");
 
 });
