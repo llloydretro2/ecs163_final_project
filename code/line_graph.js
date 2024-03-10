@@ -9,7 +9,7 @@ const x_end = width - marginRight;
 const y_start = 2/5 * height;
 const y_end = marginTop;
 
-let titleLinLeft = (2/10) * width, titleLinTop = (1/6) * height;
+let titleLinLeft = (2/10) * width, titleLinTop = (1/3) * height;
 
 const x = d3.scaleUtc().range([x_start, x_end]);
 const y = d3.scaleLinear().range([y_start, y_end]);
@@ -259,15 +259,16 @@ svg3.append("text")
     .attr("x", titleLinLeft)
     .attr("y", titleLinTop)
     .attr("text-anchor", "middle")
-    .style("font-size", "24px")
-    .style("font-weight", "bold")
+    .attr("font-family", "serif")
+    .style("font-size", "36px")
     .text("EV Specifications and the Stock Market");
 
 svg3.append("text")
     .attr("x", titleLinLeft)
     .attr("y", titleLinTop + space) 
     .attr("text-anchor", "middle")
-    .style("font-size", "18px")
+    .attr("font-family", "serif")
+    .style("font-size", "24px")
     .text("The top of the line EV specifications are from Tesla.");
 
 // Add another line of text
@@ -275,7 +276,8 @@ svg3.append("text")
     .attr("x", titleLinLeft)
     .attr("y", titleLinTop + space * 2)
     .attr("text-anchor", "middle")
-    .style("font-size", "18px")
+    .attr("font-family", "serif")
+    .style("font-size", "24px")
     .text("Furthermore, the stock price reflects this, Tesla ");
 
 // Add another line of text
@@ -283,7 +285,8 @@ svg3.append("text")
     .attr("x", titleLinLeft)
     .attr("y", titleLinTop + space * 3)
     .attr("text-anchor", "middle")
-    .style("font-size", "18px")
+    .attr("font-family", "serif")
+    .style("font-size", "24px")
     .text("outclassing every other EV manufacturer by a wide margin.");
 
 });

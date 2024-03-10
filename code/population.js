@@ -392,6 +392,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").th
         .attr("x", titlePopLeft)
         .attr("y", titlePopTop)
         .attr("text-anchor", "middle")
+        .attr("font-family", "serif")
         .style("font-size", "36px")
         .style("font-weight", "bold")
         .text("EV Populations in Washington State");
@@ -400,6 +401,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").th
         .attr("x", titlePopLeft)
         .attr("y", titlePopTop + space) 
         .attr("text-anchor", "middle")
+        .attr("font-family", "serif")
         .style("font-size", "24px")
         .text("The entire EV population soared in 2021 in the state of Washington.");
 
@@ -408,6 +410,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").th
         .attr("x", titlePopLeft)
         .attr("y", titlePopTop + space * 2)
         .attr("text-anchor", "middle")
+        .attr("font-family", "serif")
         .style("font-size", "24px")
         .text("Volvo surpassed Tesla in 2022 in terms of EV number.");
 
@@ -416,6 +419,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Population_Data.csv").th
         .attr("x", titlePopLeft)
         .attr("y", titlePopTop + space * 3)
         .attr("text-anchor", "middle")
+        .attr("font-family", "serif")
         .style("font-size", "24px")
         .text("Audi and Tesla reached a similar number of EVs in the year 2024.");       
 

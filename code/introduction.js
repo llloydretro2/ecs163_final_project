@@ -30,11 +30,11 @@ titleText.transition()
 introParagraph = svg.append("g")
     .attr("width", titleWidth + titleMargin.left + titleMargin.right)
     .attr("height", titleHeight + titleMargin.top + titleMargin.bottom)
-    .attr("transform", `translate(${titleMargin.left}, ${titleMargin.top})`)
+    .attr("transform", `translate(${titleMargin.left*2.4}, ${titleMargin.top})`)
     
 
 textContainer = introParagraph.append("text")
-    .attr("x", titleWidth/50)
+    .attr("x", titleWidth/3)
     .attr("y", titleHeight/7)
     .attr("font-size", "20px")
     .attr("font-family", "serif")
@@ -43,22 +43,22 @@ textContainer = introParagraph.append("text")
 textContainer.append("tspan")
     .attr("x", titleWidth/4)
     .attr("y", titleHeight/5)
-    .text("Nowadays, driven by growing environmental concerns and consumers’ shifting preference,")
+    .text("Nowadays, driven by growing environmental concerns and consumers’ shifting")
 
 textContainer.append("tspan")
     .attr("x", titleWidth/4)
     .attr("dy", "1.5em")
-    .text("electric vehicles (EV) have become more and more popular in recent years resulting ")
+    .text("preference, electric vehicles (EV) have become more and more popular in recent")
 
 textContainer.append("tspan")
     .attr("x", titleWidth/4)
     .attr("dy", "1.5em")
-    .text("in an increase in potential buyers. As a developing market with many companies ")
+    .text("years resulting in an increase in potential buyers. As a developing market with")
 
 textContainer.append("tspan")
     .attr("x", titleWidth/4)
     .attr("dy", "1.5em")
-    .text("with growing technology, there are many choices for new buyers.  ")
+    .text("many companies with growing technology, there are many choices for new buyers.")
 
 textContainer.append("tspan")
     .attr("x", titleWidth/4)
@@ -138,10 +138,7 @@ reason3Container = reason3.append("text")
 
 reason3Container.append("tspan")
     .text("State Goals for EV")
-reason3Container.append("tspan")
-    .attr("x", width/10*7)
-    .attr("dy", "1.5em")
-    .text("(both Democratic	and Republican)")
+
 
 reason3Container.transition()
     .duration(3000) // Animation duration of 1 second
@@ -271,7 +268,7 @@ hyperLinkContainer3 = svg.append("a")
         .style("opacity", 0)
 
 hyperLinkContainer3.transition()
-    .duration(4000) // Animation duration of 1 second
+    .duration(4000)
     .style("opacity", 1);
 
 
