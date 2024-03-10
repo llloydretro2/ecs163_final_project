@@ -16,7 +16,7 @@ const x_axis = d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0);
 const y_axis = d3.axisLeft(y).ticks(height / 40);
 
 function highlight(brand, color) {
-    svg3.selectAll(".line")
+    svg3.selectAll(".parallelLine")
         .transition().duration(200)
         .style("stroke", function() {
             if (d3.select(this).attr("class") === (brand)) {
@@ -35,7 +35,7 @@ function highlight(brand, color) {
 }
 
 function reset_highlight() {
-    d3.selectAll(".line")
+    d3.selectAll(".parallelLine")
             .transition().duration(200).delay(1000)
             .style("stroke", "#69b3a2")
             .style("opacity", "1")
@@ -100,7 +100,7 @@ d3.csv("../data/processed_data/stock/TSLA.csv").then(tsla_data =>{
         .attr("stroke-width", 1.5)
         .attr("d", line(tsla_data))
         .on("mouseover", function() {
-            highlight("line Tesla ", "#cc0000");
+            highlight("parallelLine Tesla ", "#cc0000");
         })
         .on("mouseout", function() {
             reset_highlight();
@@ -131,7 +131,7 @@ d3.csv("../data/processed_data/stock/F.csv").then(F_data =>{
         .attr("stroke-width", 1.5)
         .attr("d", line(F_data))
         .on("mouseover", function() {
-            highlight("line Ford ", "#133A7C");
+            highlight("parallelLine Ford ", "#133A7C");
         })
         .on("mouseout", function() {
             reset_highlight();
@@ -162,7 +162,7 @@ d3.csv("../data/processed_data/stock/NSANY.csv").then(NSANY_data =>{
         .attr("stroke-width", 1.5)
         .attr("d", line(NSANY_data))
         .on("mouseover", function() {
-            highlight("line Nissan ", "#cab2d6");
+            highlight("parallelLine Nissan ", "#cab2d6");
         })
         .on("mouseout", function() {
             reset_highlight();
@@ -193,7 +193,7 @@ d3.csv("../data/processed_data/stock/HMC.csv").then(HMC_data =>{
         .attr("stroke-width", 1.5)
         .attr("d", line(HMC_data))
         .on("mouseover", function() {
-            highlight("line Honda ", "#fc0384");
+            highlight("parallelLine Honda ", "#fc0384");
         })
         .on("mouseout", function() {
             reset_highlight();

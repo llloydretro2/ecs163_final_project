@@ -52,10 +52,10 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
         
 
     // Draw paths
-    g1.selectAll("myPath")
+    g1.selectAll(".parallelLine")
         .data(processedData)
         .join("path")
-        .attr("class", function (d) { return "line " + d.Brand } )
+        .attr("class", function (d) { return "parallelLine " + d.Brand } )
         .attr("d",  path)
         .style("fill", "none")
         .style("stroke", "#69b3a2")
@@ -84,7 +84,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
     // Increases size of line that you are mousing over
     lines.on("mouseover", function(d) {
         // first every group turns grey
-        d3.selectAll(".line")
+        d3.selectAll(".parallelLine")
             .transition().duration(200)
             .style("stroke", "lightgrey")
             .style("opacity", "0.2")
@@ -102,7 +102,7 @@ d3.csv("../data/processed_data/general/Electric_Vehicle_Specification_Data.csv")
 
     // Returns them to original size after done mousing over
     lines.on("mouseout", function(d) {
-        d3.selectAll(".line")
+        d3.selectAll(".parallelLine")
             .transition().duration(200).delay(1000)
             .style("stroke", "#69b3a2")
             .style("opacity", "1")
