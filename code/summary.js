@@ -16,7 +16,7 @@ summaryTitle.append("text")
     .attr("y", summaryTitleHeight/7)
     .attr("font-size", "50px")
     .attr("text-anchor", "middle")
-    .text("Visualization Summary")
+    .text("Visualization Navigation")
     .attr("font-family", "serif");
 
 
