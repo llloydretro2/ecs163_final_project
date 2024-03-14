@@ -17,7 +17,7 @@ titleText = titleContainer.append("text")
     .attr("y", titleHeight/10)
     .attr("font-size", "50px")
     .attr("text-anchor", "middle")
-    .text("Electrical Vehicle Data Visualization")
+    .text("Electric Vehicle Data Visualization")
     .attr("font-family", "serif")
     .style("opacity", 0)
 
