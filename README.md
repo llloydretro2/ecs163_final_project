@@ -7,7 +7,7 @@ and which EV they want to buy.
 
 ## Prerequisites
 
-1. Install ```Live Server``` v5.7.9 extension on local machine.
+1. Install ```Live Server``` v5.7.9 extension on local machine or an equivalent http server.
 2. Properly install the latest version of git.
 
 ## Installation
@@ -18,7 +18,7 @@ and which EV they want to buy.
 ## Usage
 
 * Under the directory ```code``` find ```index.html```. Go into that file and run
-```Live Server```.
+```Live Server``` or its equivalence.
 * This visualization tool is a scrollable tool which is consists of 5 pages.
 * The second page allows clicking on different states for selection.
 * The third page allows selections of individual line in the parallel plot and
