@@ -221,7 +221,7 @@ graph3Container.append("pattern")
         .attr("y", 0);
 
 graph3Rect = svg.insert("rect")
-    .attr("width", width/4)
+    .attr("width", width/3)
     .attr("height", height/3)
     .attr("fill", "url(#graph3)")
     .attr("transform", `translate(${width/10*6}, ${height/1.7})`)
